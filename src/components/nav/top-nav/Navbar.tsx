@@ -4,9 +4,10 @@ import { HiOutlineBell } from 'react-icons/hi'
 import { useSession, signout } from 'next-auth/client'
 
 import ToggleMenuButton from './ToggleMenuButton'
-import MonkfishLogo from './MonkfishLogo'
 import IconButton from '../../buttons/IconButton'
 import UserMenu from '../user-menu/UserMenu'
+import MonkfishLogo from './MonkfishLogo'
+import LoginButton from 'src/auth/login-button/LoginButton'
 
 interface NavbarProps {
   isSidebarOpen: boolean
@@ -19,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   return (
     <header className="bg-ebonyClay-800 bg-opacity-50 backdrop-filter backdrop-blur sticky top-0 z-30 h-[72px] w-full border-b border-ebonyClay-400">
-      <div className="flex justify-between">
+      <div className="flex items-center justify-between">
         {/* mobile navbar */}
 
         {/* Navbar left */}
@@ -33,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
         </div>
 
         {/* Navbar Right */}
-        {!session ? (
+        {session ? (
           <div className="flex items-center mr-4 space-x-1">
             <div className="hidden space-x-1 md:flex">
               <IconButton Icon={<HiOutlineBell />} />
@@ -44,9 +45,8 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
             </div>
           </div>
         ) : (
-          <div className="p-1 mr-1 sm:mr-5">
-            {/* <ButtonLogin /> */}
-            Login
+          <div className="mr-1 sm:mr-5">
+            <LoginButton />
           </div>
         )}
 

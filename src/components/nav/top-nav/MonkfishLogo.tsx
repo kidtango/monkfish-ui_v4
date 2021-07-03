@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import Monkfish from '../../icons/Monkfish'
 
-interface ILogoMonkfish {
+interface IMonkfishLogo {
   theme?: 'light' | 'dark'
 }
 
-const LogoMonkfish: FC<ILogoMonkfish> = ({ theme }) => {
+const MonkfishLogo: FC<IMonkfishLogo> = ({ theme }) => {
   return (
     <div className="flex items-baseline p-1 text-4xl font-bold text-center text-primary-400">
       <span>Monk</span>
@@ -16,4 +16,4 @@ const LogoMonkfish: FC<ILogoMonkfish> = ({ theme }) => {
   )
 }
 
-export default LogoMonkfish
+export default MonkfishLogo

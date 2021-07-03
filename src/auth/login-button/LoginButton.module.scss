@@ -1,0 +1,80 @@
+.rainbowButton {
+  display: block;
+  min-height: 50px;
+  line-height: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-position: top center;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  transition-property: background, color;
+  padding: 10px;
+
+  position: relative;
+  display: block;
+  color: var(--primary-400);
+  border-radius: 14px;
+  box-sizing: border-box;
+  border: 4px solid transparent;
+  background-color: #0e0e11;
+  background-clip: padding-box;
+  overflow: hidden;
+  z-index: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    border: 2px solid transparent;
+    background-image: linear-gradient(#0e0e30, #0e0e30), linear-gradient(90deg, #008cff, #ee278a);
+    background-clip: padding-box, border-box;
+    background-repeat: repeat-x;
+    background-size: calc(100% + 2px * 2) calc(100% + 2px * 2);
+    background-position: center;
+    border-radius: 10px;
+    z-index: -1;
+    transition: border-color 0.2s;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70vmax;
+    height: 70vmax;
+    border-radius: 20%;
+    background-image: linear-gradient(90deg, #f1d740, #14ecb6);
+    transform-origin: center;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s ease-in-out;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: #eee4e4;
+    &::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  &:active {
+    color: #c3c4d5;
+  }
+
+  &:focus {
+    color: white;
+    &::before {
+      border-color: #00b8d9;
+    }
+  }
+}
