@@ -1,40 +1,49 @@
-import React, { ReactNode } from 'react'
+import React, { FC } from 'react'
 import { ClientSafeProvider, signIn } from 'next-auth/client'
+import { GrGoogle, GrFacebookOption, GrLogin } from 'react-icons/gr'
+import clsx from 'clsx'
 
-import tw, { styled, css } from 'twin.macro'
-import { GrGoogle, GrFacebookOption } from 'react-icons/gr'
+type Provider = 'Facebook' | 'Google'
 
-interface SocialProviderProps {
+interface ISocialProvider {
   authProvider: ClientSafeProvider
 }
 
-const SocialProviderButton = styled.button(({ providerName }) => [
-  tw`p-4 rounded-md focus:(outline-none) w-full flex justify-center items-center text-gray-100 space-x-6 transform font-semibold`,
-  tw`hover:(opacity-80)`,
-  providerName === 'Google' && tw`bg-red-500`,
-  providerName === 'Facebook' && tw`bg-blue-500`,
-])
-
-const SocialProvider: React.FC<SocialProviderProps> = ({ authProvider }) => {
-  const getSocialProviderIcon = (providerName: string) => {
+const SocialProvider: FC<ISocialProvider> = ({ authProvider }) => {
+  const getSocialProviderIcon = (providerName: Provider) => {
     if (providerName === 'Facebook') {
-      return <GrFacebookOption tw="text-white w-8 h-8" />
+      return <GrFacebookOption className="w-8 h-8 text-white" />
     }
 
     if (providerName === 'Google') {
-      return <GrGoogle tw="text-white w-8 h-8" />
+      return <GrGoogle className="w-8 h-8 text-white" />
     }
+
+    // Default icon if provider is unknown
+    return <GrLogin className="w-8 h-8 text-white" />
   }
 
   return (
-    <SocialProviderButton
-      providerName={authProvider.name}
+    <div
+      className={socialProviderStyles(authProvider.name as Provider)}
       onClick={() => signIn(authProvider.id)}
     >
-      {getSocialProviderIcon(authProvider.name)}
+      {getSocialProviderIcon(authProvider.name as Provider)}
       <span>Login with {authProvider.name}</span>
-    </SocialProviderButton>
+    </div>
   )
 }
 
 export default SocialProvider
+
+function socialProviderStyles(providerName: Provider) {
+  const base =
+    'p-4 rounded-md focus:(outline-none) w-full flex justify-center items-center text-gray-100 space-x-6 transform font-semibold hover:opacity-80'
+
+  const provider = {
+    Google: 'bg-red-500',
+    Facebook: 'bg-blue-500',
+  }
+
+  return clsx(base, provider[providerName])
+}

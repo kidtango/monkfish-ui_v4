@@ -7,6 +7,7 @@ type Size = 'small' | 'medium' | 'large'
 export interface AvatarButtonProps {
   size: Size
   image?: string | undefined | null
+  [x: string]: any
 }
 
 const AvatarButton: FC<AvatarButtonProps> = ({

@@ -7,8 +7,8 @@ const LoginButton = () => {
   return (
     <button type="button" className={styles.rainbowButton}>
       <div className="flex items-center space-x-2">
-        <span>LOGIN</span>
         <RiLoginCircleLine className="text-2xl" />
+        <span>LOGIN</span>
       </div>
     </button>
   )

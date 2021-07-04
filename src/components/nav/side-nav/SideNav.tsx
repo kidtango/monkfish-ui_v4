@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { HiOutlineHome } from 'react-icons/hi'
 import { FaShoppingBasket } from 'react-icons/fa'
+import { CgHashtag } from 'react-icons/cg'
 import clsx from 'clsx'
 
 interface ISidebar {
@@ -20,15 +21,20 @@ const SideNav: FC<ISidebar> = ({ isSidebarOpen, setIsSidebarOpen }) => {
         onMouseLeave={handleMoustLeave}
       >
         {/* Sidebar header */}
-
+        {/* Items */}
         <button className={sideNavButtonStyles(isSidebarOpen)}>
-          <HiOutlineHome className={`w-6 h-6`} />
-          {isSidebarOpen && <span>Dashboard</span>}
+          <HiOutlineHome className="w-6 h-6" />
+          {isSidebarOpen && <span>Home</span>}
         </button>
         <button className={sideNavButtonStyles(isSidebarOpen)}>
           <FaShoppingBasket className="w-6 h-6" />
           {isSidebarOpen && <span>Shops</span>}
         </button>
+        <button className={sideNavButtonStyles(isSidebarOpen)}>
+          <CgHashtag className="w-6 h-6" />
+          {isSidebarOpen && <span>Tags</span>}
+        </button>
+        {/* Items ends */}
       </aside>
     </div>
   )
@@ -38,7 +44,7 @@ export default SideNav
 
 function asideStyles(isSidebarOpen: Boolean) {
   const base =
-    'flex flex-col transition-all transform bg-ebonyClay-900 bg-opacity-50 rounded drop-shadow-lg backdrop-filter backdrop-blur w-72 p-4 items-center space-y-3'
+    'flex flex-col transition-all transform bg-ebonyClay-900 bg-opacity-50 rounded drop-shadow-lg backdrop-filter backdrop-blur w-64 p-4 items-center space-y-3'
   const sidebarClosed =
     '-translate-x-full w-0 sm:translate-x-0 sm:w-0 lg:translate-x-0 lg:w-20 px-0'
 

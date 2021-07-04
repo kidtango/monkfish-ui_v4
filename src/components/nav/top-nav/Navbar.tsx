@@ -7,7 +7,7 @@ import ToggleMenuButton from './ToggleMenuButton'
 import IconButton from '../../buttons/IconButton'
 import UserMenu from '../user-menu/UserMenu'
 import MonkfishLogo from './MonkfishLogo'
-import LoginButton from 'src/auth/login-button/LoginButton'
+import LoginButton from 'src/components/auth/login-button/LoginButton'
 
 interface NavbarProps {
   isSidebarOpen: boolean
