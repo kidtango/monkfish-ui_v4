@@ -1,18 +1,18 @@
-import React, { FC, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { Session } from 'next-auth'
+// import { Session } from 'next-auth'
 
 import { RiMoreFill } from 'react-icons/ri'
 
 const menuItemStyles = () =>
   `block px-4 py-2 text-sm transition-colors rounded-md cursor-pointer text-gray-50 hover:bg-primary-200 flex items-center space-x-2`
 
-const UserMenu = () => {
+const CommentMenu = () => {
   return (
     <Menu>
-      {({ open }) => (
+      {() => (
         <div className="relative inline-block text-left">
-          <Menu.Button className="p-2 focus:outline-none text-lg text-deepOcean-300 hover:(bg-deepOcean-700 rounded)">
+          <Menu.Button className="p-2 text-lg focus:outline-none text-deepOcean-300 hover:bg-ocean-700 hover:rounded">
             <RiMoreFill />
           </Menu.Button>
           {/* Use the Transition + open render prop argument to add transitions. */}
@@ -27,13 +27,13 @@ const UserMenu = () => {
           >
             <Menu.Items
               static
-              className="absolute right-0 z-50 w-48 p-1 origin-top-right rounded-md shadow-lg bg-primary ring-1 ring-black ring-opacity-5 focus:outline-none"
+              className="absolute right-0 z-50 w-48 p-1 origin-top-right rounded-md shadow-lg bg-primary-500 ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <Menu.Item>
-                {({ active }) => <div className={menuItemStyles()}>Edit</div>}
+                {() => <div className={menuItemStyles()}>Edit</div>}
               </Menu.Item>
               <Menu.Item>
-                {({ active }) => <div className={menuItemStyles()}>Delete</div>}
+                {() => <div className={menuItemStyles()}>Delete</div>}
               </Menu.Item>
             </Menu.Items>
           </Transition>
@@ -43,4 +43,4 @@ const UserMenu = () => {
   )
 }
 
-export default UserMenu
+export default CommentMenu

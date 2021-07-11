@@ -5,7 +5,7 @@ interface IMonkfishLogo {
   theme?: 'light' | 'dark'
 }
 
-const MonkfishLogo: FC<IMonkfishLogo> = ({ theme }) => {
+const MonkfishLogo: FC<IMonkfishLogo> = () => {
   return (
     <div className="flex items-baseline p-1 text-4xl font-bold text-center text-primary-400">
       <span>Monk</span>

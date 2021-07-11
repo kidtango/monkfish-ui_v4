@@ -1,16 +1,15 @@
 import React from 'react'
 import { FaHashtag } from 'react-icons/fa'
 import { VscSettings } from 'react-icons/vsc'
+import IconButton from '../buttons/IconButton'
 import UnderlineButton from '../buttons/underline-button/UnderlineButton'
 
 const MyTags = () => {
   return (
     <div className="hidden w-40 mt-2 mr-6 text-gray-300 align-baseline min-w-max sm:flex sm:flex-col">
       <div className="flex items-center justify-between w-full mb-4 text-2xl">
-        <h2 className="">My Tags</h2>
-        <span>
-          <VscSettings className="hover:text-primary-300 hover:cursor-pointer" />
-        </span>
+        <h2 className="font-bold">My Tags</h2>
+        <IconButton Icon={<VscSettings className="text-2xl" />} />
       </div>
       <div>
         <UnderlineButton size="medium">

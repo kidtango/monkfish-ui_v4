@@ -12,7 +12,7 @@ const Post = () => {
   const handleSavePost = () => setIsSavedPost(!isSavedPost)
 
   return (
-    <div className="rounded overflow-hidden bg-ebonyClay-600 text-gray-200 transition-all hover:(shadow-lg cursor-pointer)">
+    <div className="overflow-hidden text-gray-200 transition-all bg-opacity-50 rounded bg-ebonyClay-600 hover:shadow-lg hover:cursor-pointer hover:bg-opacity-90 backdrop-filter ring-2 ring-ebonyClay-600">
       <div className="aspect-h-2 aspect-w-6">
         <img
           className="object-cover"
@@ -20,7 +20,7 @@ const Post = () => {
         />
       </div>
       <div className="p-2">
-        <div className="flex items-center">
+        <div className="flex items-center space-x-2">
           <AvatarButton size="medium" tw="mr-2" />
           <div className="text-xs leading-4">
             <p className="font-semibold text-orange-500">Scott Tang</p>
@@ -28,7 +28,7 @@ const Post = () => {
           </div>
         </div>
         <div className="md:(px-6 py-2)">
-          <h1 className="text-xl justify-between leading-5 font-semibold md:text-3xl  py-2 hover:(text-primary-300 cursor-pointer)">
+          <h1 className="justify-between py-2 text-xl font-semibold leading-5 md:text-3xl hover:text-primary-300 hover:cursor-pointer">
             Lorem ipsum, dolor sit
           </h1>
           <p className="mt-2 space-x-1 text-xs text-gray-400">
@@ -39,8 +39,8 @@ const Post = () => {
           <div className="flex items-end justify-between mt-4">
             <div className="flex space-x-2">
               <Button buttonType={'plain'} size="small">
-                <RiHeart2Line />
-                <span>10</span>
+                <RiHeart2Line className="text-pink-500" />
+                <span className="text-pink-500">10</span>
               </Button>
               <Button buttonType={'plain'} size="small">
                 <AiOutlineComment />

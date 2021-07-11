@@ -41,5 +41,11 @@
     }
   },
   "exclude": ["./out/**/*", "./node_modules/**/*"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/icons/Monkfish.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/icons/Monkfish.tsx",
+    "src/pages/editor.js"
+  ]
 }

@@ -5,10 +5,13 @@ import { FaRegCommentDots } from 'react-icons/fa'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { RiHeart2Fill } from 'react-icons/ri'
 import { RiHeart2Line } from 'react-icons/ri'
-import { RiMoreFill } from 'react-icons/ri'
 import AvatarButton from '../buttons/AvatarButton'
 import Button from '../buttons/Button'
 import clsx from 'clsx'
+import CommentMenu from './CommentMenu'
+import CommentInput from './CommentInput'
+import Reply from './Reply'
+import CommentCollapsed from './CommentCollapsed'
 
 const avatarImage =
   'https://www.hollywoodreporter.com/wp-content/uploads/2019/03/avatar-publicity_still-h_2019.jpg?w=681&h=383&crop=1'
@@ -35,10 +38,10 @@ const Comment: FC<IComment> = ({
     setIsCollpased(!isCollpased)
   }
   return (
-    <div className="flex flex-col w-full space-x-2 space-y-2">
+    <>
       {!isCollpased && (
-        <div>
-          <div className="flex space-x-3">
+        <>
+          <div className="flex space-x-2">
             <div className="flex flex-col items-center space-y-4 min-w-max">
               <AvatarButton size="medium" image={avatarImage} />
               <Button
@@ -52,7 +55,7 @@ const Comment: FC<IComment> = ({
             <div className="space-y-4">
               <div
                 className={clsx(
-                  'w-full p-3 space-y-2 rounded ring ring-ebonyClay-500',
+                  'w-full space-y-2 rounded ring ring-ebonyClay-500 p-2',
                   isCommentReply && 'ring-ebonyClay-700',
                 )}
               >
@@ -79,14 +82,14 @@ const Comment: FC<IComment> = ({
               </div>
               {!isToggleReply && (
                 <div className="flex space-x-2">
-                  <Button buttonType={'plain'} size="medium">
+                  <Button buttonType={'plain'} size="small">
                     {isLiked ? <RiHeart2Fill /> : <RiHeart2Line />}
                     <span>10 Likes</span>
                   </Button>
                   <Button
                     buttonType={'plain'}
                     onClick={toggleComment}
-                    size="medium"
+                    size="small"
                   >
                     <FaRegCommentDots />
                     <span className="hidden sm:flex">Reply</span>
@@ -105,7 +108,7 @@ const Comment: FC<IComment> = ({
           <div className="mt-5 ml-8">
             <Reply />
           </div>
-        </div>
+        </>
       )}
 
       {/* Collapsed comment section starts */}
@@ -117,7 +120,7 @@ const Comment: FC<IComment> = ({
         />
       )}
       {/* Collapsed comment section ends */}
-    </div>
+    </>
   )
 }
 

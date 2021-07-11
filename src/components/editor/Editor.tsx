@@ -10,14 +10,13 @@ interface IEditor {
   setContent: React.Dispatch<React.SetStateAction<string>>
   content: string
 }
-export default function Editor({ setContent, content }: IEditor) {
-  const handleEditorChange = ({ text }) => {
+export default function Editor({ setContent }: IEditor) {
+  const handleEditorChange = ({ text = '' }) => {
     setContent(text)
   }
   return (
     <MdEditor
       style={{ height: '600px' }}
-      className="rounded"
       renderHTML={text => <ReactMarkdown children={text} />}
       onChange={handleEditorChange}
     />

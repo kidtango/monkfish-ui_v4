@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React, { FC, ReactNode } from 'react'
 
 type Size = 'small' | 'medium' | 'large'
-type ButtonType = 'primary' | 'secondary' | 'plain'
+type ButtonType = 'primary' | 'secondary' | 'plain' | 'fullWidth'
 
 interface ButtonStates {
   disabled: Boolean
@@ -36,22 +36,24 @@ export default Button
 
 const buttonStyles = (props: IButton) => {
   const base =
-    'lex items-center px-2 py-2 space-x-1 text-xl transition-all outline-none bg-opacity-50 hover:bg-opacity-90 focus:outline-none'
+    'flex items-center px-2 py-2 space-x-1 text-xl transition-all outline-none bg-opacity-100 hover:bg-opacity-90 focus:outline-none flex text-gray-200'
   const size = {
-    small: 'text-sm',
+    small: 'text-xs',
     medium: 'text-base',
     large: 'text-lg',
   }
   const buttonType = {
     primary:
-      'flex items-center justify-center space-x-1 bg-primary-700 p-2 px-3 rounded hover:(opacity-80) outline-none focus:outline-none focus:ring focus:ring-primary-400 text-gray-200 font-semibold',
+      'space-x-1 bg-primary-500 p-2 px-3 rounded hover:bg-opacity-60 outline-none focus:outline-none focus:ring focus:ring-primary-400 font-semibold',
     secondary:
-      'text-primary rounded ring ring-deepOcean-500 hover:text-primary-600 font-semibold',
+      'text-primary rounded ring ring-primary-600 hover:text-primary-600 font-semibold text-primary-500',
     plain:
-      'ring-0 text-deepOcean-300 hover:p-2 hover:bg-ocean-700 hover:rounded font-semibold',
+      'ring-0 text-primary-300 hover:p-2 hover:bg-primary-700 hover:rounded font-semibold focus:ring focus:ring-primary-400 focus:rounded',
+    fullWidth:
+      'flex items-center justify-center w-full p-1 space-x-2 rounded bg-primary-500 hover:ring hover:ring-primary-600',
   }
   const states = {
-    disabled: 'text-gray-300 opacity-30 ring-gray-300 hover:text-gray-300',
+    disabled: 'text-gray-300 opacity-30 ring ring-gray-400 hover:text-gray-300',
   }
   return clsx(
     base,
@@ -60,10 +62,3 @@ const buttonStyles = (props: IButton) => {
     props?.buttonStates?.disabled && states.disabled,
   )
 }
-
-// secondary = { secondary }
-// primary = { primary }
-// plain = { plain }
-// disabled = { disabled }
-// size = { size }
-// type = { type }

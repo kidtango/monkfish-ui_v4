@@ -13,7 +13,7 @@ const CommentCollapsed: FC<ICommentCollapsed> = ({
 }) => {
   return (
     <div
-      className="w-full flex items-center space-x-2 p-2 bg-deepOcean-500 rounded opacity-80 hover:(opacity-100 cursor-pointer)"
+      className="flex items-center w-full p-2 space-x-2 rounded bg-deepOcean-500 opacity-80 hover:opacity-100 hover:cursor-pointer hover:text-primary-300"
       onClick={handleExpand}
     >
       <BsChevronExpand />

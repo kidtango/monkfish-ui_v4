@@ -31,7 +31,7 @@ const Reply: FC<IReply> = ({ isReplyByPostOwner, isLiked }) => {
   return (
     <div className="flex flex-col w-full space-x-2 space-y-2">
       {!isCollpased && (
-        <div className="flex space-x-3">
+        <div className="flex space-x-2">
           <div className="flex flex-col items-center space-y-4 min-w-max">
             <AvatarButton size="medium" />
             <Button
@@ -43,12 +43,7 @@ const Reply: FC<IReply> = ({ isReplyByPostOwner, isLiked }) => {
             </Button>
           </div>
           <div className="space-y-4">
-            <div
-              className={clsx(
-                isReplyByPostOwner &&
-                  'w-full p-3 space-y-2 rounded ring ring-ebonyClay-500',
-              )}
-            >
+            <div className="w-full p-3 space-y-2 rounded ring ring-ebonyClay-500">
               <div className="flex items-center place-content-between">
                 <div className="flex items-center">
                   <span className="font-semibold text-gray-400">
@@ -62,7 +57,7 @@ const Reply: FC<IReply> = ({ isReplyByPostOwner, isLiked }) => {
                 <CommentMenu />
               </div>
               <div>
-                <div className={`${isReplyByPostOwner} && 'text-green-300'`}>
+                <div className={clsx(isReplyByPostOwner && 'text-green-300')}>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   Libero, architecto eaque illum porro nemo, atque veritatis
                   animi dolor praesentium quisquam harum eveniet vel inventore
@@ -72,14 +67,14 @@ const Reply: FC<IReply> = ({ isReplyByPostOwner, isLiked }) => {
             </div>
             {!isToggleReply && (
               <div className="flex space-x-2">
-                <Button buttonType={'plain'} size="medium">
+                <Button buttonType={'plain'} size="small">
                   {isLiked ? <RiHeart2Fill /> : <RiHeart2Line />}
                   <span>10 Likes</span>
                 </Button>
                 <Button
                   onClick={toggleComment}
                   buttonType={'plain'}
-                  size="medium"
+                  size="small"
                 >
                   <FaRegCommentDots />
                   <span className="hidden sm:flex">Reply</span>

@@ -19,7 +19,7 @@ interface IUserMenu {
 const UserMenu: FC<IUserMenu> = ({ session, signout }) => {
   return (
     <Menu>
-      {({ open }) => (
+      {() => (
         <div className="relative inline-block text-left">
           <Menu.Button className="focus:outline-none">
             <AvatarButton size="medium" image={session?.user!.image} />
@@ -39,17 +39,14 @@ const UserMenu: FC<IUserMenu> = ({ session, signout }) => {
               className="absolute right-0 z-50 w-48 p-2 origin-top-right rounded-md shadow-lg bg-primary-500 ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <Menu.Item>
-                {({ active }) =>
+                {() =>
                   session ? (
                     <div className={menuItemStyles()} onClick={signout}>
                       <FaSignOutAlt />
                       <span>Sign Out</span>
                     </div>
                   ) : (
-                    <Link
-                      className="w-full px-4 py-2 text-sm transition-colors rounded-md cursor-pointer text-gray-50 hover:bg-primary-200"
-                      href="/auth/signin"
-                    >
+                    <Link href="/auth/signin">
                       <div className={menuItemStyles()}>
                         <FaSignInAlt />
                         <span>Sign In</span>
@@ -59,7 +56,7 @@ const UserMenu: FC<IUserMenu> = ({ session, signout }) => {
                 }
               </Menu.Item>
               <Menu.Item>
-                {({ active }) => (
+                {() => (
                   <div className={menuItemStyles()}>
                     <AiOutlineSetting />
                     <span>Profile Settings</span>
@@ -75,3 +72,6 @@ const UserMenu: FC<IUserMenu> = ({ session, signout }) => {
 }
 
 export default UserMenu
+
+// className =
+//   'w-full px-4 py-2 text-sm transition-colors rounded-md cursor-pointer text-gray-50 hover:bg-primary-200'

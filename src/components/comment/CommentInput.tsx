@@ -11,18 +11,18 @@ interface ICommentInput {
 const CommentInput: FC<ICommentInput> = ({ isCommentReply, handleDismiss }) => {
   return (
     <div className="w-full">
-      <form className="flex space-x-3">
+      <form className="flex p-1 space-x-2">
         {!isCommentReply && (
           <div className="min-w-max">
             <AvatarButton size="medium" />
           </div>
         )}
-        <div className="w-full min-w-max">
+        <div className="w-full">
           <textarea
-            className="transition-all w-full rounded-t bg-ebonyClay-700 focus:(h-40) p-2 border-2 border-ebonyClay-400 h-20 text-gray-200 outline-none"
+            className={textAreaStyles}
             placeholder="Add to the discussion"
           />
-          <div className="p-1 mb-2 -mt-2 border-2 rounded-b border-ebonyClay-400 bg-ebonyClay-600 ">
+          <div className="mb-2 rounded ring-2 ring-ebonyClay-400 bg-ebonyClay-600">
             <Button buttonType={'plain'} size="small">
               <RiImageAddLine />
               <span>Add Image</span>
@@ -49,3 +49,6 @@ const CommentInput: FC<ICommentInput> = ({ isCommentReply, handleDismiss }) => {
 }
 
 export default CommentInput
+
+const textAreaStyles =
+  'p-1 w-full h-20 text-gray-200 transition-all border-transparent rounded outline-none ring-2 bg-ebonyClay-700 focus:h-40 ring-ebonyClay-400 focus:border-transparent focus:ring-2 focus:ring-ebonyClay-300'

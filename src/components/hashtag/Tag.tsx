@@ -14,7 +14,7 @@ interface ITag {
 }
 
 const Tag: FC<ITag> = ({ tag, onDelete }) => {
-  const handleClick = () => onDelete(tag.id)
+  const handleClick = () => onDelete && onDelete(tag.id)
 
   return (
     <div className="flex min-w-max">
@@ -23,10 +23,12 @@ const Tag: FC<ITag> = ({ tag, onDelete }) => {
         style={{ background: tag.color }}
       >
         <span>{tag.label}</span>
-        <FiTrash2
-          onClick={handleClick}
-          className="text-gray-200 transition-all hover:text-gray-50 hover:text-lg"
-        />
+        {onDelete && (
+          <FiTrash2
+            onClick={handleClick}
+            className="text-gray-200 transition-all hover:text-gray-50 hover:text-lg"
+          />
+        )}
       </div>
     </div>
   )

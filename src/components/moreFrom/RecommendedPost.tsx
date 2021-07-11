@@ -4,7 +4,7 @@ import { MoreFromPrps } from './MoreFrom'
 
 const RecommendedPost: React.FC<MoreFromPrps> = ({ isFromPoster = false }) => {
   return (
-    <div className="bg-ebonyClay-500 text-deepOcean-100 transition-all hover:(bg-ebonyClay-600 cursor-pointer)">
+    <div className="transition-all bg-ebonyClay-500 text-ocean-100 hover:bg-ebonyClay-600 hover:cursor-pointer">
       <div className="flex items-start p-2">
         {!isFromPoster && (
           <div>

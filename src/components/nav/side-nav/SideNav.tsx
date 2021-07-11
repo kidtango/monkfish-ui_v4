@@ -44,9 +44,9 @@ export default SideNav
 
 function asideStyles(isSidebarOpen: Boolean) {
   const base =
-    'flex flex-col transition-all transform bg-ebonyClay-900 bg-opacity-50 rounded drop-shadow-lg backdrop-filter backdrop-blur w-64 p-4 items-center space-y-3'
+    'flex flex-col transition-all transform bg-ebonyClay-900 bg-opacity-50 rounded drop-shadow-lg backdrop-filter backdrop-blur w-64 p-4 items-center space-y-3 ring ring-ebonyClay-600'
   const sidebarClosed =
-    '-translate-x-full w-0 sm:translate-x-0 sm:w-0 lg:translate-x-0 lg:w-20 px-0'
+    '-translate-x-full w-0 sm:translate-x-0 sm:w-0 lg:translate-x-0 lg:w-20 px-0 ring-0'
 
   return isSidebarOpen ? base : clsx(base, sidebarClosed)
 }
