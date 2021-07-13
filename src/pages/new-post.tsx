@@ -8,6 +8,8 @@ import Editor from '../components/editor/Editor'
 import Tag, { Tag as TTag } from '../components/hashtag/Tag'
 import Button from 'src/components/buttons/Button'
 import MonkfishLogo from 'src/components/nav/top-nav/MonkfishLogo'
+import { useCreate_PostMutation } from 'src/generated'
+import withApollo from 'next-with-apollo'
 
 // NOTE - Mock data
 
@@ -44,9 +46,7 @@ const tagsMockData = [
 // NOTE - Mock data ends
 
 type Inputs = {
-  title: String
-  coverImage: String
-  hashTags: String[]
+  title: string
 }
 
 // interface IPost {
@@ -57,25 +57,39 @@ type Inputs = {
 //   updatedAt: String
 // }
 
-export default function NewPost() {
+const NewPost = () => {
   const { register, handleSubmit, watch } = useForm<Inputs>()
-
-  const watchTag = watch('hashTags')
-  console.log(
-    '🚀 ~ file: new-post.tsx ~ line 68 ~ NewPost ~ watchTag',
-    watchTag,
-  )
 
   const [content, setContent] = useState<string>('')
 
   const [tags, setTags] = useState<TTag[]>(tagsMockData)
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
-    const withContent = { ...data, content, hashTags: tags }
-    console.log(
-      '🚀 ~ file: new-post.tsx ~ line 50 ~ NewPost ~ withContent',
-      withContent,
-    )
+  const [createPost] = useCreate_PostMutation()
+
+  const onSubmit: SubmitHandler<Inputs> = args => {
+    const tags = [{ tag_id: 1 }, { tag_id: 2 }]
+    const isPublished = true
+    const headerImage =
+      'https://www.hakaimagazine.com/wp-content/uploads/header-vr-coral-beauty.jpg'
+    const newPost = {
+      ...args,
+      content,
+      hashTags: tags,
+      headerImage,
+      isPublished: true,
+    }
+    console.log('🚀 ~ file: new-post.tsx ~ line 75 ~ NewPost ~ data', newPost)
+
+    createPost({
+      variables: {
+        author_id: '103178889326056206360',
+        header_image: headerImage,
+        title: args.title,
+        data: tags,
+        content,
+        is_published: isPublished,
+      },
+    })
   }
 
   const handleDelete = (tagId: number) => {
@@ -95,7 +109,7 @@ export default function NewPost() {
           <div className="p-6">
             <div className="border rounded-md shadow bg-gray-50">
               <div className="px-10 my-8">
-                <Button buttonType={'plain'} size="medium">
+                <Button buttonType="plain" size="medium" type="button">
                   <BsImage />
                   <span>Add a cover image</span>
                 </Button>
@@ -110,8 +124,7 @@ export default function NewPost() {
               </div>
               <div className="w-full px-10 mb-10 text-gray-600">
                 <input
-                  className="block w-full mb-2 border-0 outline-none bg-gray-50 focus:"
-                  {...register('hashTags')}
+                  className="block w-full mb-2 border-0 outline-none bg-gray-50"
                   type="text"
                   placeholder="Add up to four tags..."
                 />
@@ -122,7 +135,7 @@ export default function NewPost() {
                 </div>
               </div>
               <div className="max-w-full px-10 py-2 mb-5 text-gray-500 bg-gray-100">
-                <Button buttonType={'plain'} size="medium">
+                <Button buttonType={'plain'} size="medium" type="button">
                   <BsImage />
                   <span>Upload image</span>
                 </Button>
@@ -130,11 +143,11 @@ export default function NewPost() {
               <div className="px-10 py-4 mb-6">
                 <Editor setContent={setContent} content={content} />
                 <div className="flex mt-6 space-x-4">
-                  <Button buttonType={'primary'} size="medium" type="submit">
+                  <Button buttonType="primary" size="medium" type="submit">
                     <TiUpload />
                     <span>Publish</span>
                   </Button>
-                  <Button buttonType={'plain'} size="medium">
+                  <Button buttonType="plain" size="medium" type="button">
                     Save Draft
                   </Button>
                 </div>
@@ -146,3 +159,5 @@ export default function NewPost() {
     </div>
   )
 }
+
+export default NewPost

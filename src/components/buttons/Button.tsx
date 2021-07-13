@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { FC, ReactNode } from 'react'
+import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 
 type Size = 'small' | 'medium' | 'large'
 type ButtonType = 'primary' | 'secondary' | 'plain' | 'fullWidth'
@@ -16,13 +16,13 @@ interface IButton {
   buttonType: ButtonType
   size: Size
   onClick?: () => void
-  type?: String
+  type: 'button' | 'submit' | 'reset' | undefined
 }
 
 const Button: FC<IButton> = props => {
   return (
     <button
-      type="button"
+      type={props.type}
       onClick={props.onClick}
       className={buttonStyles(props)}
       disabled={props.buttonStates?.disabled as boolean}

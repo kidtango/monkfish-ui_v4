@@ -7,7 +7,7 @@ import ToggleMenuButton from './ToggleMenuButton'
 import IconButton from '../../buttons/IconButton'
 import UserMenu from '../user-menu/UserMenu'
 import MonkfishLogo from './MonkfishLogo'
-// import LoginButton from 'src/components/auth/login-button/LoginButton'
+import LoginButton from 'src/components/auth/login-button/LoginButton'
 
 interface INavbar {
   isSidebarOpen: boolean
@@ -55,17 +55,8 @@ const Navbar: React.FC<INavbar> = ({ isSidebarOpen, setIsSidebarOpen }) => {
               </div>
             </div>
           ) : (
-            // <div className="mr-1 sm:mr-5">
-            //   <LoginButton />
-            // </div>
-            <div className="flex items-center mr-4 space-x-1">
-              <div className="hidden space-x-1 md:flex">
-                <IconButton Icon={<HiOutlineBell className="text-3xl" />} />
-                <IconButton Icon={<HiOutlineCog className="text-3xl" />} />
-              </div>
-              <div className="mt-1">
-                <UserMenu session={session!} signout={signout} />
-              </div>
+            <div className="mr-1 sm:mr-5">
+              <LoginButton />
             </div>
           )}
 

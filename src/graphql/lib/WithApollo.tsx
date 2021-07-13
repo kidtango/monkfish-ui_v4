@@ -13,6 +13,12 @@ const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_HASURA_GQL_ENDPOINT,
 })
 
+const authHeaders = getHeaders()
+console.log(
+  '🚀 ~ file: WithApollo.tsx ~ line 18 ~ authMiddleware ~ authHeaders',
+  authHeaders,
+)
+
 const authMiddleware = new ApolloLink((operation, forward) => {
   const authHeaders = getHeaders()
 
@@ -69,5 +75,6 @@ function getHeaders() {
     userAuth = token ? { Authorization: `Bearer ${token}` } : null
   }
 
+  // return adminAuth
   return userAuth ? userAuth : adminAuth
 }

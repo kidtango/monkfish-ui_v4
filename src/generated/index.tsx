@@ -16,6 +16,19 @@ export type Scalars = {
   timetz: any;
 };
 
+/** expression to compare columns of type Boolean. All fields are combined with logical 'AND'. */
+export type Boolean_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Boolean']>;
+  _gt?: Maybe<Scalars['Boolean']>;
+  _gte?: Maybe<Scalars['Boolean']>;
+  _in?: Maybe<Array<Scalars['Boolean']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Boolean']>;
+  _lte?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Scalars['Boolean']>;
+  _nin?: Maybe<Array<Scalars['Boolean']>>;
+};
+
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: Maybe<Scalars['Int']>;
@@ -4141,6 +4154,7 @@ export type Posts = {
   is_bookmarked_by_user?: Maybe<Scalars['Boolean']>;
   /** A computed field, executes function "post_liked_by_user" */
   is_liked_by_user?: Maybe<Scalars['Boolean']>;
+  is_published: Scalars['Boolean'];
   likes: Scalars['Int'];
   /** An array relationship */
   post_likes: Array<Post_Likes>;
@@ -4311,6 +4325,7 @@ export type Posts_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   header_image?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  is_published?: Maybe<Boolean_Comparison_Exp>;
   likes?: Maybe<Int_Comparison_Exp>;
   post_likes?: Maybe<Post_Likes_Bool_Exp>;
   post_tags?: Maybe<Post_Tag_Bool_Exp>;
@@ -4340,6 +4355,7 @@ export type Posts_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   header_image?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  is_published?: Maybe<Scalars['Boolean']>;
   likes?: Maybe<Scalars['Int']>;
   post_likes?: Maybe<Post_Likes_Arr_Rel_Insert_Input>;
   post_tags?: Maybe<Post_Tag_Arr_Rel_Insert_Input>;
@@ -4429,6 +4445,7 @@ export type Posts_Order_By = {
   created_at?: Maybe<Order_By>;
   header_image?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  is_published?: Maybe<Order_By>;
   likes?: Maybe<Order_By>;
   post_likes_aggregate?: Maybe<Post_Likes_Aggregate_Order_By>;
   post_tags_aggregate?: Maybe<Post_Tag_Aggregate_Order_By>;
@@ -4454,6 +4471,8 @@ export enum Posts_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsPublished = 'is_published',
+  /** column name */
   Likes = 'likes',
   /** column name */
   Title = 'title',
@@ -4468,6 +4487,7 @@ export type Posts_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   header_image?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  is_published?: Maybe<Scalars['Boolean']>;
   likes?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -4537,6 +4557,8 @@ export enum Posts_Update_Column {
   HeaderImage = 'header_image',
   /** column name */
   Id = 'id',
+  /** column name */
+  IsPublished = 'is_published',
   /** column name */
   Likes = 'likes',
   /** column name */
@@ -5481,13 +5503,16 @@ export type Subscription_RootUsers_By_PkArgs = {
 /** columns and relationships of "tags" */
 export type Tags = {
   __typename?: 'tags';
+  color: Scalars['String'];
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator: Scalars['String'];
   id: Scalars['Int'];
+  label: Scalars['String'];
+  name: Scalars['String'];
   /** An array relationship */
   tag_posts: Array<Post_Tag>;
   /** An aggregated array relationship */
   tag_posts_aggregate: Post_Tag_Aggregate;
-  tag_value: Scalars['String'];
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -5578,10 +5603,13 @@ export type Tags_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Tags_Bool_Exp>>>;
   _not?: Maybe<Tags_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Tags_Bool_Exp>>>;
+  color?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  creator?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  label?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
   tag_posts?: Maybe<Post_Tag_Bool_Exp>;
-  tag_value?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -5598,44 +5626,59 @@ export type Tags_Inc_Input = {
 
 /** input type for inserting data into table "tags" */
 export type Tags_Insert_Input = {
+  color?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  label?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   tag_posts?: Maybe<Post_Tag_Arr_Rel_Insert_Input>;
-  tag_value?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** aggregate max on columns */
 export type Tags_Max_Fields = {
   __typename?: 'tags_max_fields';
+  color?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
-  tag_value?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** order by max() on columns of table "tags" */
 export type Tags_Max_Order_By = {
+  color?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  creator?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  tag_value?: Maybe<Order_By>;
+  label?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Tags_Min_Fields = {
   __typename?: 'tags_min_fields';
+  color?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
-  tag_value?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** order by min() on columns of table "tags" */
 export type Tags_Min_Order_By = {
+  color?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  creator?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  tag_value?: Maybe<Order_By>;
+  label?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -5663,10 +5706,13 @@ export type Tags_On_Conflict = {
 
 /** ordering options when selecting data from "tags" */
 export type Tags_Order_By = {
+  color?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  creator?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  label?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   tag_posts_aggregate?: Maybe<Post_Tag_Aggregate_Order_By>;
-  tag_value?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -5678,20 +5724,29 @@ export type Tags_Pk_Columns_Input = {
 /** select columns of table "tags" */
 export enum Tags_Select_Column {
   /** column name */
+  Color = 'color',
+  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Creator = 'creator',
   /** column name */
   Id = 'id',
   /** column name */
-  TagValue = 'tag_value',
+  Label = 'label',
+  /** column name */
+  Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at'
 }
 
 /** input type for updating data in table "tags" */
 export type Tags_Set_Input = {
+  color?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
-  tag_value?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -5742,11 +5797,17 @@ export type Tags_Sum_Order_By = {
 /** update columns of table "tags" */
 export enum Tags_Update_Column {
   /** column name */
+  Color = 'color',
+  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Creator = 'creator',
   /** column name */
   Id = 'id',
   /** column name */
-  TagValue = 'tag_value',
+  Label = 'label',
+  /** column name */
+  Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -6279,6 +6340,35 @@ export type Insert_New_UserMutation = (
   )> }
 );
 
+export type Create_PostMutationVariables = Exact<{
+  author_id: Scalars['String'];
+  data: Array<Post_Tag_Insert_Input> | Post_Tag_Insert_Input;
+  content: Scalars['String'];
+  header_image: Scalars['String'];
+  title: Scalars['String'];
+  is_published?: Maybe<Scalars['Boolean']>;
+}>;
+
+
+export type Create_PostMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id'>
+  )> }
+);
+
+export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'author_id' | 'content' | 'created_at' | 'header_image' | 'id' | 'is_bookmarked_by_user' | 'is_liked_by_user' | 'likes'>
+  )> }
+);
+
 
 export const GetUserDocument = gql`
     query GetUser($id: String!) {
@@ -6355,3 +6445,84 @@ export function useInsert_New_UserMutation(baseOptions?: Apollo.MutationHookOpti
 export type Insert_New_UserMutationHookResult = ReturnType<typeof useInsert_New_UserMutation>;
 export type Insert_New_UserMutationResult = Apollo.MutationResult<Insert_New_UserMutation>;
 export type Insert_New_UserMutationOptions = Apollo.BaseMutationOptions<Insert_New_UserMutation, Insert_New_UserMutationVariables>;
+export const Create_PostDocument = gql`
+    mutation create_post($author_id: String!, $data: [post_tag_insert_input!]!, $content: String!, $header_image: String!, $title: String!, $is_published: Boolean) {
+  insert_posts_one(
+    object: {post_tags: {data: $data}, author_id: $author_id, content: $content, header_image: $header_image, title: $title, is_published: $is_published}
+  ) {
+    id
+  }
+}
+    `;
+export type Create_PostMutationFn = Apollo.MutationFunction<Create_PostMutation, Create_PostMutationVariables>;
+
+/**
+ * __useCreate_PostMutation__
+ *
+ * To run a mutation, you first call `useCreate_PostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreate_PostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostMutation, { data, loading, error }] = useCreate_PostMutation({
+ *   variables: {
+ *      author_id: // value for 'author_id'
+ *      data: // value for 'data'
+ *      content: // value for 'content'
+ *      header_image: // value for 'header_image'
+ *      title: // value for 'title'
+ *      is_published: // value for 'is_published'
+ *   },
+ * });
+ */
+export function useCreate_PostMutation(baseOptions?: Apollo.MutationHookOptions<Create_PostMutation, Create_PostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Create_PostMutation, Create_PostMutationVariables>(Create_PostDocument, options);
+      }
+export type Create_PostMutationHookResult = ReturnType<typeof useCreate_PostMutation>;
+export type Create_PostMutationResult = Apollo.MutationResult<Create_PostMutation>;
+export type Create_PostMutationOptions = Apollo.BaseMutationOptions<Create_PostMutation, Create_PostMutationVariables>;
+export const GetPostsDocument = gql`
+    query getPosts {
+  posts {
+    author_id
+    content
+    created_at
+    header_image
+    id
+    is_bookmarked_by_user
+    is_liked_by_user
+    likes
+  }
+}
+    `;
+
+/**
+ * __useGetPostsQuery__
+ *
+ * To run a query within a React component, call `useGetPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPostsQuery(baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+      }
+export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+        }
+export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
+export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
+export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;

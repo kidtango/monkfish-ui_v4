@@ -24,13 +24,15 @@ const SocialProvider: FC<ISocialProvider> = ({ authProvider }) => {
   }
 
   return (
-    <div
+    <button
+      type="button"
+      aria-label="social login"
       className={socialProviderStyles(authProvider.name as Provider)}
       onClick={() => signIn(authProvider.id)}
     >
       {getSocialProviderIcon(authProvider.name as Provider)}
       <span>Login with {authProvider.name}</span>
-    </div>
+    </button>
   )
 }
 
