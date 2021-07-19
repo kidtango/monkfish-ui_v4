@@ -6,14 +6,14 @@ import styles from './LoginButton.module.scss'
 
 const LoginButton = () => {
   return (
-    <button type="button" className={styles.rainbowButton}>
-      <Link href="/auth/signin">
+    <Link href="/auth/signin">
+      <button type="button" className={styles.rainbowButton}>
         <div className="flex items-center space-x-2">
           <RiLoginCircleLine className="text-2xl" />
           <span>LOGIN</span>
         </div>
-      </Link>
-    </button>
+      </button>
+    </Link>
   )
 }
 

@@ -1,4 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  SyntheticEvent,
+} from 'react'
 import { HiOutlineCog } from 'react-icons/hi'
 import { HiOutlineBell } from 'react-icons/hi'
 import { useSession, signout } from 'next-auth/client'
@@ -8,6 +13,8 @@ import IconButton from '../../buttons/IconButton'
 import UserMenu from '../user-menu/UserMenu'
 import MonkfishLogo from './MonkfishLogo'
 import LoginButton from 'src/components/auth/login-button/LoginButton'
+import Button from 'src/components/buttons/Button'
+import { useRouter } from 'next/router'
 
 interface INavbar {
   isSidebarOpen: boolean
@@ -16,6 +23,7 @@ interface INavbar {
 
 const Navbar: React.FC<INavbar> = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [session, loading] = useSession()
+  const router = useRouter()
 
   useEffect(() => {
     if (session) {
@@ -26,6 +34,11 @@ const Navbar: React.FC<INavbar> = ({ isSidebarOpen, setIsSidebarOpen }) => {
   }, [session])
 
   if (loading) return <div>loading...</div>
+
+  const handleClick = (e: SyntheticEvent) => {
+    e.preventDefault()
+    router.push('/new-post')
+  }
 
   return (
     <header className="bg-ebonyClay-800 bg-opacity-50 backdrop-filter backdrop-blur sticky top-0 z-30 h-[72px] w-full border-b border-ebonyClay-600 shadow">
@@ -45,7 +58,17 @@ const Navbar: React.FC<INavbar> = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
           {/* Navbar Right */}
           {session ? (
-            <div className="flex items-center mr-4 space-x-1">
+            <div className="flex items-center mr-4 space-x-2">
+              <span className="hidden sm:block">
+                <Button
+                  buttonType="primary"
+                  size="small"
+                  type="button"
+                  onClick={handleClick}
+                >
+                  <span>Create Post</span>
+                </Button>
+              </span>
               <div className="hidden space-x-1 md:flex">
                 <IconButton Icon={<HiOutlineBell className="text-3xl" />} />
                 <IconButton Icon={<HiOutlineCog className="text-3xl" />} />

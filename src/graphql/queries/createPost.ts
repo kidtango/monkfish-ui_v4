@@ -3,7 +3,6 @@ import { gql } from '@apollo/client'
 export const CREATE_POST = gql`
   mutation create_post(
     $author_id: String!
-    $data: [post_tag_insert_input!]!
     $content: String!
     $header_image: String!
     $title: String!
@@ -11,7 +10,7 @@ export const CREATE_POST = gql`
   ) {
     insert_posts_one(
       object: {
-        post_tags: { data: $data }
+        # post_tags: { data: $data }
         author_id: $author_id
         content: $content
         header_image: $header_image

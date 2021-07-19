@@ -13,21 +13,22 @@ const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_HASURA_GQL_ENDPOINT,
 })
 
-const authHeaders = getHeaders()
-console.log(
-  '🚀 ~ file: WithApollo.tsx ~ line 18 ~ authMiddleware ~ authHeaders',
-  authHeaders,
-)
-
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const authHeaders = getHeaders()
+  // const authHeaders = getHeaders()
+
+  let token: string | null = ''
+
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem('token') || null
+    // userAuth = token ? { Authorization: `Bearer ${token}` } : null
+  }
 
   // add the authorization to the headers
   operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      ...authHeaders,
+      Authorization: token ? `Bearer ${token}` : '',
     },
   }))
 
@@ -58,23 +59,22 @@ const WithApollo = nextWithApollo(
 
 export default WithApollo
 
-/*
- * returns headers for bearer token when JWT token is availabe in local storage or admin access for Hasura API
- **/
-function getHeaders() {
-  let userAuth: { Authorization: string } | null = null
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { req, res } = context
 
-  // Access API with API KEY
-  const adminAuth = {
-    'x-hasura-admin-secret': process.env.NEXT_PUBLIC_HASURA_ADMIN_SECRET,
+  const session = await getSession({ req })
+
+  if (session && res && session.token) {
+    res.writeHead(302, {
+      location: '/',
+    })
+    res.end()
   }
+  const providers = await getProviders()
 
-  // Check localstorage when rendering on clientside
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('token') || null
-    userAuth = token ? { Authorization: `Bearer ${token}` } : null
+  return {
+    props: {
+      providers,
+    },
   }
-
-  // return adminAuth
-  return userAuth ? userAuth : adminAuth
 }

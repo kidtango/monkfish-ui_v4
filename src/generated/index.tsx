@@ -16,7 +16,8 @@ export type Scalars = {
   timetz: any;
 };
 
-/** expression to compare columns of type Boolean. All fields are combined with logical 'AND'. */
+
+/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 export type Boolean_Comparison_Exp = {
   _eq?: Maybe<Scalars['Boolean']>;
   _gt?: Maybe<Scalars['Boolean']>;
@@ -29,7 +30,7 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
-/** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
+/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: Maybe<Scalars['Int']>;
   _gt?: Maybe<Scalars['Int']>;
@@ -42,22 +43,45 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
-/** expression to compare columns of type String. All fields are combined with logical 'AND'. */
+export type SampleInput = {
+  name: Scalars['String'];
+};
+
+export type SampleOutput = {
+  __typename?: 'SampleOutput';
+  message: Scalars['String'];
+};
+
+/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: Maybe<Scalars['String']>;
   _gt?: Maybe<Scalars['String']>;
   _gte?: Maybe<Scalars['String']>;
+  /** does the column match the given case-insensitive pattern */
   _ilike?: Maybe<Scalars['String']>;
   _in?: Maybe<Array<Scalars['String']>>;
+  /** does the column match the given POSIX regular expression, case insensitive */
+  _iregex?: Maybe<Scalars['String']>;
   _is_null?: Maybe<Scalars['Boolean']>;
+  /** does the column match the given pattern */
   _like?: Maybe<Scalars['String']>;
   _lt?: Maybe<Scalars['String']>;
   _lte?: Maybe<Scalars['String']>;
   _neq?: Maybe<Scalars['String']>;
+  /** does the column NOT match the given case-insensitive pattern */
   _nilike?: Maybe<Scalars['String']>;
   _nin?: Maybe<Array<Scalars['String']>>;
+  /** does the column NOT match the given POSIX regular expression, case insensitive */
+  _niregex?: Maybe<Scalars['String']>;
+  /** does the column NOT match the given pattern */
   _nlike?: Maybe<Scalars['String']>;
+  /** does the column NOT match the given POSIX regular expression, case sensitive */
+  _nregex?: Maybe<Scalars['String']>;
+  /** does the column NOT match the given SQL regular expression */
   _nsimilar?: Maybe<Scalars['String']>;
+  /** does the column match the given POSIX regular expression, case sensitive */
+  _regex?: Maybe<Scalars['String']>;
+  /** does the column match the given SQL regular expression */
   _similar?: Maybe<Scalars['String']>;
 };
 
@@ -67,7 +91,7 @@ export type Bookmarks = {
   created_at?: Maybe<Scalars['timestamptz']>;
   id: Scalars['Int'];
   /** An object relationship */
-  post_bookmark: Posts;
+  post: Posts;
   post_id: Scalars['Int'];
   updated_at?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
@@ -86,7 +110,7 @@ export type Bookmarks_Aggregate = {
 export type Bookmarks_Aggregate_Fields = {
   __typename?: 'bookmarks_aggregate_fields';
   avg?: Maybe<Bookmarks_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Bookmarks_Max_Fields>;
   min?: Maybe<Bookmarks_Min_Fields>;
   stddev?: Maybe<Bookmarks_Stddev_Fields>;
@@ -123,6 +147,7 @@ export type Bookmarks_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "bookmarks" */
 export type Bookmarks_Arr_Rel_Insert_Input = {
   data: Array<Bookmarks_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Bookmarks_On_Conflict>;
 };
 
@@ -141,12 +166,12 @@ export type Bookmarks_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "bookmarks". All fields are combined with a logical 'AND'. */
 export type Bookmarks_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Bookmarks_Bool_Exp>>>;
+  _and?: Maybe<Array<Bookmarks_Bool_Exp>>;
   _not?: Maybe<Bookmarks_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Bookmarks_Bool_Exp>>>;
+  _or?: Maybe<Array<Bookmarks_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
-  post_bookmark?: Maybe<Posts_Bool_Exp>;
+  post?: Maybe<Posts_Bool_Exp>;
   post_id?: Maybe<Int_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_bookmark?: Maybe<Users_Bool_Exp>;
@@ -159,7 +184,7 @@ export enum Bookmarks_Constraint {
   BookmarksPkey = 'bookmarks_pkey'
 }
 
-/** input type for incrementing integer column in table "bookmarks" */
+/** input type for incrementing numeric columns in table "bookmarks" */
 export type Bookmarks_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
@@ -169,7 +194,7 @@ export type Bookmarks_Inc_Input = {
 export type Bookmarks_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
-  post_bookmark?: Maybe<Posts_Obj_Rel_Insert_Input>;
+  post?: Maybe<Posts_Obj_Rel_Insert_Input>;
   post_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_bookmark?: Maybe<Users_Obj_Rel_Insert_Input>;
@@ -217,37 +242,31 @@ export type Bookmarks_Min_Order_By = {
 /** response of any mutation on the table "bookmarks" */
 export type Bookmarks_Mutation_Response = {
   __typename?: 'bookmarks_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Bookmarks>;
-};
-
-/** input type for inserting object relation for remote table "bookmarks" */
-export type Bookmarks_Obj_Rel_Insert_Input = {
-  data: Bookmarks_Insert_Input;
-  on_conflict?: Maybe<Bookmarks_On_Conflict>;
 };
 
 /** on conflict condition type for table "bookmarks" */
 export type Bookmarks_On_Conflict = {
   constraint: Bookmarks_Constraint;
-  update_columns: Array<Bookmarks_Update_Column>;
+  update_columns?: Array<Bookmarks_Update_Column>;
   where?: Maybe<Bookmarks_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "bookmarks" */
+/** Ordering options when selecting data from "bookmarks". */
 export type Bookmarks_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  post_bookmark?: Maybe<Posts_Order_By>;
+  post?: Maybe<Posts_Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_bookmark?: Maybe<Users_Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "bookmarks" */
+/** primary key columns input for table: bookmarks */
 export type Bookmarks_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -400,7 +419,7 @@ export type Followers_Aggregate = {
 export type Followers_Aggregate_Fields = {
   __typename?: 'followers_aggregate_fields';
   avg?: Maybe<Followers_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Followers_Max_Fields>;
   min?: Maybe<Followers_Min_Fields>;
   stddev?: Maybe<Followers_Stddev_Fields>;
@@ -437,6 +456,7 @@ export type Followers_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "followers" */
 export type Followers_Arr_Rel_Insert_Input = {
   data: Array<Followers_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Followers_On_Conflict>;
 };
 
@@ -453,9 +473,9 @@ export type Followers_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "followers". All fields are combined with a logical 'AND'. */
 export type Followers_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Followers_Bool_Exp>>>;
+  _and?: Maybe<Array<Followers_Bool_Exp>>;
   _not?: Maybe<Followers_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Followers_Bool_Exp>>>;
+  _or?: Maybe<Array<Followers_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   follower_id?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
@@ -474,7 +494,7 @@ export enum Followers_Constraint {
   FollowersUserIdKey = 'followers_user_id_key'
 }
 
-/** input type for incrementing integer column in table "followers" */
+/** input type for incrementing numeric columns in table "followers" */
 export type Followers_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -524,26 +544,20 @@ export type Followers_Min_Order_By = {
 /** response of any mutation on the table "followers" */
 export type Followers_Mutation_Response = {
   __typename?: 'followers_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Followers>;
-};
-
-/** input type for inserting object relation for remote table "followers" */
-export type Followers_Obj_Rel_Insert_Input = {
-  data: Followers_Insert_Input;
-  on_conflict?: Maybe<Followers_On_Conflict>;
 };
 
 /** on conflict condition type for table "followers" */
 export type Followers_On_Conflict = {
   constraint: Followers_Constraint;
-  update_columns: Array<Followers_Update_Column>;
+  update_columns?: Array<Followers_Update_Column>;
   where?: Maybe<Followers_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "followers" */
+/** Ordering options when selecting data from "followers". */
 export type Followers_Order_By = {
   created_at?: Maybe<Order_By>;
   follower_id?: Maybe<Order_By>;
@@ -551,7 +565,7 @@ export type Followers_Order_By = {
   user_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "followers" */
+/** primary key columns input for table: followers */
 export type Followers_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -692,7 +706,7 @@ export type Followings_Aggregate = {
 export type Followings_Aggregate_Fields = {
   __typename?: 'followings_aggregate_fields';
   avg?: Maybe<Followings_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Followings_Max_Fields>;
   min?: Maybe<Followings_Min_Fields>;
   stddev?: Maybe<Followings_Stddev_Fields>;
@@ -729,6 +743,7 @@ export type Followings_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "followings" */
 export type Followings_Arr_Rel_Insert_Input = {
   data: Array<Followings_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Followings_On_Conflict>;
 };
 
@@ -745,9 +760,9 @@ export type Followings_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "followings". All fields are combined with a logical 'AND'. */
 export type Followings_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Followings_Bool_Exp>>>;
+  _and?: Maybe<Array<Followings_Bool_Exp>>;
   _not?: Maybe<Followings_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Followings_Bool_Exp>>>;
+  _or?: Maybe<Array<Followings_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   following_id?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
@@ -767,7 +782,7 @@ export enum Followings_Constraint {
   FollowingsUserIdKey = 'followings_user_id_key'
 }
 
-/** input type for incrementing integer column in table "followings" */
+/** input type for incrementing numeric columns in table "followings" */
 export type Followings_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -818,26 +833,20 @@ export type Followings_Min_Order_By = {
 /** response of any mutation on the table "followings" */
 export type Followings_Mutation_Response = {
   __typename?: 'followings_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Followings>;
-};
-
-/** input type for inserting object relation for remote table "followings" */
-export type Followings_Obj_Rel_Insert_Input = {
-  data: Followings_Insert_Input;
-  on_conflict?: Maybe<Followings_On_Conflict>;
 };
 
 /** on conflict condition type for table "followings" */
 export type Followings_On_Conflict = {
   constraint: Followings_Constraint;
-  update_columns: Array<Followings_Update_Column>;
+  update_columns?: Array<Followings_Update_Column>;
   where?: Maybe<Followings_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "followings" */
+/** Ordering options when selecting data from "followings". */
 export type Followings_Order_By = {
   created_at?: Maybe<Order_By>;
   following_id?: Maybe<Order_By>;
@@ -846,7 +855,7 @@ export type Followings_Order_By = {
   user_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "followings" */
+/** primary key columns input for table: followings */
 export type Followings_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -980,7 +989,7 @@ export type Livestock_Likes_Aggregate = {
 export type Livestock_Likes_Aggregate_Fields = {
   __typename?: 'livestock_likes_aggregate_fields';
   avg?: Maybe<Livestock_Likes_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Livestock_Likes_Max_Fields>;
   min?: Maybe<Livestock_Likes_Min_Fields>;
   stddev?: Maybe<Livestock_Likes_Stddev_Fields>;
@@ -1017,6 +1026,7 @@ export type Livestock_Likes_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "livestock_likes" */
 export type Livestock_Likes_Arr_Rel_Insert_Input = {
   data: Array<Livestock_Likes_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Livestock_Likes_On_Conflict>;
 };
 
@@ -1035,9 +1045,9 @@ export type Livestock_Likes_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "livestock_likes". All fields are combined with a logical 'AND'. */
 export type Livestock_Likes_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Livestock_Likes_Bool_Exp>>>;
+  _and?: Maybe<Array<Livestock_Likes_Bool_Exp>>;
   _not?: Maybe<Livestock_Likes_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Livestock_Likes_Bool_Exp>>>;
+  _or?: Maybe<Array<Livestock_Likes_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   livestock_id?: Maybe<Int_Comparison_Exp>;
@@ -1050,7 +1060,7 @@ export enum Livestock_Likes_Constraint {
   LivestockLikesPkey = 'livestock_likes_pkey'
 }
 
-/** input type for incrementing integer column in table "livestock_likes" */
+/** input type for incrementing numeric columns in table "livestock_likes" */
 export type Livestock_Likes_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   livestock_id?: Maybe<Scalars['Int']>;
@@ -1101,26 +1111,20 @@ export type Livestock_Likes_Min_Order_By = {
 /** response of any mutation on the table "livestock_likes" */
 export type Livestock_Likes_Mutation_Response = {
   __typename?: 'livestock_likes_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Livestock_Likes>;
-};
-
-/** input type for inserting object relation for remote table "livestock_likes" */
-export type Livestock_Likes_Obj_Rel_Insert_Input = {
-  data: Livestock_Likes_Insert_Input;
-  on_conflict?: Maybe<Livestock_Likes_On_Conflict>;
 };
 
 /** on conflict condition type for table "livestock_likes" */
 export type Livestock_Likes_On_Conflict = {
   constraint: Livestock_Likes_Constraint;
-  update_columns: Array<Livestock_Likes_Update_Column>;
+  update_columns?: Array<Livestock_Likes_Update_Column>;
   where?: Maybe<Livestock_Likes_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "livestock_likes" */
+/** Ordering options when selecting data from "livestock_likes". */
 export type Livestock_Likes_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -1128,7 +1132,7 @@ export type Livestock_Likes_Order_By = {
   user_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "livestock_likes" */
+/** primary key columns input for table: livestock_likes */
 export type Livestock_Likes_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -1262,9 +1266,9 @@ export type Livestocks = {
   created_at?: Maybe<Scalars['timestamptz']>;
   id: Scalars['Int'];
   likes: Scalars['Int'];
-  /** An array relationship */
+  /** fetch data from the table: "livestock_likes" */
   livestock_likes: Array<Livestock_Likes>;
-  /** An aggregated array relationship */
+  /** fetch aggregated fields from the table: "livestock_likes" */
   livestock_likes_aggregate: Livestock_Likes_Aggregate;
   name: Scalars['String'];
   seller_id: Scalars['String'];
@@ -1306,7 +1310,7 @@ export type Livestocks_Aggregate = {
 export type Livestocks_Aggregate_Fields = {
   __typename?: 'livestocks_aggregate_fields';
   avg?: Maybe<Livestocks_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Livestocks_Max_Fields>;
   min?: Maybe<Livestocks_Min_Fields>;
   stddev?: Maybe<Livestocks_Stddev_Fields>;
@@ -1343,6 +1347,7 @@ export type Livestocks_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "livestocks" */
 export type Livestocks_Arr_Rel_Insert_Input = {
   data: Array<Livestocks_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Livestocks_On_Conflict>;
 };
 
@@ -1361,9 +1366,9 @@ export type Livestocks_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "livestocks". All fields are combined with a logical 'AND'. */
 export type Livestocks_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Livestocks_Bool_Exp>>>;
+  _and?: Maybe<Array<Livestocks_Bool_Exp>>;
   _not?: Maybe<Livestocks_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Livestocks_Bool_Exp>>>;
+  _or?: Maybe<Array<Livestocks_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   likes?: Maybe<Int_Comparison_Exp>;
@@ -1382,7 +1387,7 @@ export enum Livestocks_Constraint {
   LivestocksPkey = 'livestocks_pkey'
 }
 
-/** input type for incrementing integer column in table "livestocks" */
+/** input type for incrementing numeric columns in table "livestocks" */
 export type Livestocks_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   likes?: Maybe<Scalars['Int']>;
@@ -1455,26 +1460,20 @@ export type Livestocks_Min_Order_By = {
 /** response of any mutation on the table "livestocks" */
 export type Livestocks_Mutation_Response = {
   __typename?: 'livestocks_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Livestocks>;
-};
-
-/** input type for inserting object relation for remote table "livestocks" */
-export type Livestocks_Obj_Rel_Insert_Input = {
-  data: Livestocks_Insert_Input;
-  on_conflict?: Maybe<Livestocks_On_Conflict>;
 };
 
 /** on conflict condition type for table "livestocks" */
 export type Livestocks_On_Conflict = {
   constraint: Livestocks_Constraint;
-  update_columns: Array<Livestocks_Update_Column>;
+  update_columns?: Array<Livestocks_Update_Column>;
   where?: Maybe<Livestocks_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "livestocks" */
+/** Ordering options when selecting data from "livestocks". */
 export type Livestocks_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -1488,7 +1487,7 @@ export type Livestocks_Order_By = {
   water_type?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "livestocks" */
+/** primary key columns input for table: livestocks */
 export type Livestocks_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -1639,6 +1638,7 @@ export type Livestocks_Variance_Order_By = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  createHelloWorld?: Maybe<SampleOutput>;
   /** delete data from the table: "bookmarks" */
   delete_bookmarks?: Maybe<Bookmarks_Mutation_Response>;
   /** delete single row from the table: "bookmarks" */
@@ -1803,6 +1803,12 @@ export type Mutation_Root = {
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateHelloWorldArgs = {
+  arg1: SampleInput;
 };
 
 
@@ -2394,7 +2400,7 @@ export type Online_Users_Aggregate = {
 /** aggregate fields of "online_users" */
 export type Online_Users_Aggregate_Fields = {
   __typename?: 'online_users_aggregate_fields';
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Online_Users_Max_Fields>;
   min?: Maybe<Online_Users_Min_Fields>;
 };
@@ -2406,23 +2412,11 @@ export type Online_Users_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "online_users" */
-export type Online_Users_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<Online_Users_Max_Order_By>;
-  min?: Maybe<Online_Users_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "online_users" */
-export type Online_Users_Arr_Rel_Insert_Input = {
-  data: Array<Online_Users_Insert_Input>;
-};
-
 /** Boolean expression to filter rows from the table "online_users". All fields are combined with a logical 'AND'. */
 export type Online_Users_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Online_Users_Bool_Exp>>>;
+  _and?: Maybe<Array<Online_Users_Bool_Exp>>;
   _not?: Maybe<Online_Users_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Online_Users_Bool_Exp>>>;
+  _or?: Maybe<Array<Online_Users_Bool_Exp>>;
   id?: Maybe<String_Comparison_Exp>;
   last_seen?: Maybe<Timestamptz_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
@@ -2443,13 +2437,6 @@ export type Online_Users_Max_Fields = {
   name?: Maybe<Scalars['String']>;
 };
 
-/** order by max() on columns of table "online_users" */
-export type Online_Users_Max_Order_By = {
-  id?: Maybe<Order_By>;
-  last_seen?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-};
-
 /** aggregate min on columns */
 export type Online_Users_Min_Fields = {
   __typename?: 'online_users_min_fields';
@@ -2458,28 +2445,16 @@ export type Online_Users_Min_Fields = {
   name?: Maybe<Scalars['String']>;
 };
 
-/** order by min() on columns of table "online_users" */
-export type Online_Users_Min_Order_By = {
-  id?: Maybe<Order_By>;
-  last_seen?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-};
-
 /** response of any mutation on the table "online_users" */
 export type Online_Users_Mutation_Response = {
   __typename?: 'online_users_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Online_Users>;
 };
 
-/** input type for inserting object relation for remote table "online_users" */
-export type Online_Users_Obj_Rel_Insert_Input = {
-  data: Online_Users_Insert_Input;
-};
-
-/** ordering options when selecting data from "online_users" */
+/** Ordering options when selecting data from "online_users". */
 export type Online_Users_Order_By = {
   id?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
@@ -2505,17 +2480,17 @@ export type Online_Users_Set_Input = {
 
 /** column ordering options */
 export enum Order_By {
-  /** in the ascending order, nulls last */
+  /** in ascending order, nulls last */
   Asc = 'asc',
-  /** in the ascending order, nulls first */
+  /** in ascending order, nulls first */
   AscNullsFirst = 'asc_nulls_first',
-  /** in the ascending order, nulls last */
+  /** in ascending order, nulls last */
   AscNullsLast = 'asc_nulls_last',
-  /** in the descending order, nulls first */
+  /** in descending order, nulls first */
   Desc = 'desc',
-  /** in the descending order, nulls first */
+  /** in descending order, nulls first */
   DescNullsFirst = 'desc_nulls_first',
-  /** in the descending order, nulls last */
+  /** in descending order, nulls last */
   DescNullsLast = 'desc_nulls_last'
 }
 
@@ -2539,7 +2514,7 @@ export type Post_Comment_Likes_Aggregate = {
 export type Post_Comment_Likes_Aggregate_Fields = {
   __typename?: 'post_comment_likes_aggregate_fields';
   avg?: Maybe<Post_Comment_Likes_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Post_Comment_Likes_Max_Fields>;
   min?: Maybe<Post_Comment_Likes_Min_Fields>;
   stddev?: Maybe<Post_Comment_Likes_Stddev_Fields>;
@@ -2576,6 +2551,7 @@ export type Post_Comment_Likes_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "post_comment_likes" */
 export type Post_Comment_Likes_Arr_Rel_Insert_Input = {
   data: Array<Post_Comment_Likes_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Post_Comment_Likes_On_Conflict>;
 };
 
@@ -2594,9 +2570,9 @@ export type Post_Comment_Likes_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "post_comment_likes". All fields are combined with a logical 'AND'. */
 export type Post_Comment_Likes_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Post_Comment_Likes_Bool_Exp>>>;
+  _and?: Maybe<Array<Post_Comment_Likes_Bool_Exp>>;
   _not?: Maybe<Post_Comment_Likes_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Post_Comment_Likes_Bool_Exp>>>;
+  _or?: Maybe<Array<Post_Comment_Likes_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   post_comment_id?: Maybe<Int_Comparison_Exp>;
@@ -2609,7 +2585,7 @@ export enum Post_Comment_Likes_Constraint {
   LikesCommentPkey = 'likes_comment_pkey'
 }
 
-/** input type for incrementing integer column in table "post_comment_likes" */
+/** input type for incrementing numeric columns in table "post_comment_likes" */
 export type Post_Comment_Likes_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   post_comment_id?: Maybe<Scalars['Int']>;
@@ -2660,26 +2636,20 @@ export type Post_Comment_Likes_Min_Order_By = {
 /** response of any mutation on the table "post_comment_likes" */
 export type Post_Comment_Likes_Mutation_Response = {
   __typename?: 'post_comment_likes_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Post_Comment_Likes>;
-};
-
-/** input type for inserting object relation for remote table "post_comment_likes" */
-export type Post_Comment_Likes_Obj_Rel_Insert_Input = {
-  data: Post_Comment_Likes_Insert_Input;
-  on_conflict?: Maybe<Post_Comment_Likes_On_Conflict>;
 };
 
 /** on conflict condition type for table "post_comment_likes" */
 export type Post_Comment_Likes_On_Conflict = {
   constraint: Post_Comment_Likes_Constraint;
-  update_columns: Array<Post_Comment_Likes_Update_Column>;
+  update_columns?: Array<Post_Comment_Likes_Update_Column>;
   where?: Maybe<Post_Comment_Likes_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "post_comment_likes" */
+/** Ordering options when selecting data from "post_comment_likes". */
 export type Post_Comment_Likes_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -2687,7 +2657,7 @@ export type Post_Comment_Likes_Order_By = {
   user_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "post_comment_likes" */
+/** primary key columns input for table: post_comment_likes */
 export type Post_Comment_Likes_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -2843,7 +2813,7 @@ export type Post_Comment_Replies_Aggregate = {
 export type Post_Comment_Replies_Aggregate_Fields = {
   __typename?: 'post_comment_replies_aggregate_fields';
   avg?: Maybe<Post_Comment_Replies_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Post_Comment_Replies_Max_Fields>;
   min?: Maybe<Post_Comment_Replies_Min_Fields>;
   stddev?: Maybe<Post_Comment_Replies_Stddev_Fields>;
@@ -2862,27 +2832,6 @@ export type Post_Comment_Replies_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "post_comment_replies" */
-export type Post_Comment_Replies_Aggregate_Order_By = {
-  avg?: Maybe<Post_Comment_Replies_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Post_Comment_Replies_Max_Order_By>;
-  min?: Maybe<Post_Comment_Replies_Min_Order_By>;
-  stddev?: Maybe<Post_Comment_Replies_Stddev_Order_By>;
-  stddev_pop?: Maybe<Post_Comment_Replies_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Post_Comment_Replies_Stddev_Samp_Order_By>;
-  sum?: Maybe<Post_Comment_Replies_Sum_Order_By>;
-  var_pop?: Maybe<Post_Comment_Replies_Var_Pop_Order_By>;
-  var_samp?: Maybe<Post_Comment_Replies_Var_Samp_Order_By>;
-  variance?: Maybe<Post_Comment_Replies_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "post_comment_replies" */
-export type Post_Comment_Replies_Arr_Rel_Insert_Input = {
-  data: Array<Post_Comment_Replies_Insert_Input>;
-  on_conflict?: Maybe<Post_Comment_Replies_On_Conflict>;
-};
-
 /** aggregate avg on columns */
 export type Post_Comment_Replies_Avg_Fields = {
   __typename?: 'post_comment_replies_avg_fields';
@@ -2890,17 +2839,11 @@ export type Post_Comment_Replies_Avg_Fields = {
   post_comment_id?: Maybe<Scalars['Float']>;
 };
 
-/** order by avg() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Avg_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
-};
-
 /** Boolean expression to filter rows from the table "post_comment_replies". All fields are combined with a logical 'AND'. */
 export type Post_Comment_Replies_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Post_Comment_Replies_Bool_Exp>>>;
+  _and?: Maybe<Array<Post_Comment_Replies_Bool_Exp>>;
   _not?: Maybe<Post_Comment_Replies_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Post_Comment_Replies_Bool_Exp>>>;
+  _or?: Maybe<Array<Post_Comment_Replies_Bool_Exp>>;
   comment_author_id?: Maybe<String_Comparison_Exp>;
   content?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -2916,7 +2859,7 @@ export enum Post_Comment_Replies_Constraint {
   PostCommentRepliesPkey = 'post_comment_replies_pkey'
 }
 
-/** input type for incrementing integer column in table "post_comment_replies" */
+/** input type for incrementing numeric columns in table "post_comment_replies" */
 export type Post_Comment_Replies_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   post_comment_id?: Maybe<Scalars['Int']>;
@@ -2945,17 +2888,6 @@ export type Post_Comment_Replies_Max_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by max() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Max_Order_By = {
-  comment_author_id?: Maybe<Order_By>;
-  content?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
-  reply_author_id?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
 /** aggregate min on columns */
 export type Post_Comment_Replies_Min_Fields = {
   __typename?: 'post_comment_replies_min_fields';
@@ -2968,40 +2900,23 @@ export type Post_Comment_Replies_Min_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by min() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Min_Order_By = {
-  comment_author_id?: Maybe<Order_By>;
-  content?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
-  reply_author_id?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
 /** response of any mutation on the table "post_comment_replies" */
 export type Post_Comment_Replies_Mutation_Response = {
   __typename?: 'post_comment_replies_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Post_Comment_Replies>;
-};
-
-/** input type for inserting object relation for remote table "post_comment_replies" */
-export type Post_Comment_Replies_Obj_Rel_Insert_Input = {
-  data: Post_Comment_Replies_Insert_Input;
-  on_conflict?: Maybe<Post_Comment_Replies_On_Conflict>;
 };
 
 /** on conflict condition type for table "post_comment_replies" */
 export type Post_Comment_Replies_On_Conflict = {
   constraint: Post_Comment_Replies_Constraint;
-  update_columns: Array<Post_Comment_Replies_Update_Column>;
+  update_columns?: Array<Post_Comment_Replies_Update_Column>;
   where?: Maybe<Post_Comment_Replies_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "post_comment_replies" */
+/** Ordering options when selecting data from "post_comment_replies". */
 export type Post_Comment_Replies_Order_By = {
   comment_author_id?: Maybe<Order_By>;
   content?: Maybe<Order_By>;
@@ -3012,7 +2927,7 @@ export type Post_Comment_Replies_Order_By = {
   updated_at?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "post_comment_replies" */
+/** primary key columns input for table: post_comment_replies */
 export type Post_Comment_Replies_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -3053,23 +2968,11 @@ export type Post_Comment_Replies_Stddev_Fields = {
   post_comment_id?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Stddev_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
-};
-
 /** aggregate stddev_pop on columns */
 export type Post_Comment_Replies_Stddev_Pop_Fields = {
   __typename?: 'post_comment_replies_stddev_pop_fields';
   id?: Maybe<Scalars['Float']>;
   post_comment_id?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_pop() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -3079,23 +2982,11 @@ export type Post_Comment_Replies_Stddev_Samp_Fields = {
   post_comment_id?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_samp() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
-};
-
 /** aggregate sum on columns */
 export type Post_Comment_Replies_Sum_Fields = {
   __typename?: 'post_comment_replies_sum_fields';
   id?: Maybe<Scalars['Int']>;
   post_comment_id?: Maybe<Scalars['Int']>;
-};
-
-/** order by sum() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Sum_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
 };
 
 /** update columns of table "post_comment_replies" */
@@ -3123,12 +3014,6 @@ export type Post_Comment_Replies_Var_Pop_Fields = {
   post_comment_id?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_pop() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
-};
-
 /** aggregate var_samp on columns */
 export type Post_Comment_Replies_Var_Samp_Fields = {
   __typename?: 'post_comment_replies_var_samp_fields';
@@ -3136,23 +3021,11 @@ export type Post_Comment_Replies_Var_Samp_Fields = {
   post_comment_id?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_samp() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
-};
-
 /** aggregate variance on columns */
 export type Post_Comment_Replies_Variance_Fields = {
   __typename?: 'post_comment_replies_variance_fields';
   id?: Maybe<Scalars['Float']>;
   post_comment_id?: Maybe<Scalars['Float']>;
-};
-
-/** order by variance() on columns of table "post_comment_replies" */
-export type Post_Comment_Replies_Variance_Order_By = {
-  id?: Maybe<Order_By>;
-  post_comment_id?: Maybe<Order_By>;
 };
 
 /** columns and relationships of "post_comments" */
@@ -3169,7 +3042,7 @@ export type Post_Comments = {
   post: Posts;
   /** An array relationship */
   post_comment_likes: Array<Post_Comment_Likes>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   post_comment_likes_aggregate: Post_Comment_Likes_Aggregate;
   post_id: Scalars['Int'];
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -3208,7 +3081,7 @@ export type Post_Comments_Aggregate = {
 export type Post_Comments_Aggregate_Fields = {
   __typename?: 'post_comments_aggregate_fields';
   avg?: Maybe<Post_Comments_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Post_Comments_Max_Fields>;
   min?: Maybe<Post_Comments_Min_Fields>;
   stddev?: Maybe<Post_Comments_Stddev_Fields>;
@@ -3245,6 +3118,7 @@ export type Post_Comments_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "post_comments" */
 export type Post_Comments_Arr_Rel_Insert_Input = {
   data: Array<Post_Comments_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Post_Comments_On_Conflict>;
 };
 
@@ -3265,13 +3139,14 @@ export type Post_Comments_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "post_comments". All fields are combined with a logical 'AND'. */
 export type Post_Comments_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Post_Comments_Bool_Exp>>>;
+  _and?: Maybe<Array<Post_Comments_Bool_Exp>>;
   _not?: Maybe<Post_Comments_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Post_Comments_Bool_Exp>>>;
+  _or?: Maybe<Array<Post_Comments_Bool_Exp>>;
   author_id?: Maybe<String_Comparison_Exp>;
   content?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  is_comment_liked_by_user?: Maybe<Boolean_Comparison_Exp>;
   likes?: Maybe<Int_Comparison_Exp>;
   post?: Maybe<Posts_Bool_Exp>;
   post_comment_likes?: Maybe<Post_Comment_Likes_Bool_Exp>;
@@ -3288,7 +3163,7 @@ export enum Post_Comments_Constraint {
   CommentsPkey = 'comments_pkey'
 }
 
-/** input type for incrementing integer column in table "post_comments" */
+/** input type for incrementing numeric columns in table "post_comments" */
 export type Post_Comments_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   likes?: Maybe<Scalars['Int']>;
@@ -3358,26 +3233,20 @@ export type Post_Comments_Min_Order_By = {
 /** response of any mutation on the table "post_comments" */
 export type Post_Comments_Mutation_Response = {
   __typename?: 'post_comments_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Post_Comments>;
-};
-
-/** input type for inserting object relation for remote table "post_comments" */
-export type Post_Comments_Obj_Rel_Insert_Input = {
-  data: Post_Comments_Insert_Input;
-  on_conflict?: Maybe<Post_Comments_On_Conflict>;
 };
 
 /** on conflict condition type for table "post_comments" */
 export type Post_Comments_On_Conflict = {
   constraint: Post_Comments_Constraint;
-  update_columns: Array<Post_Comments_Update_Column>;
+  update_columns?: Array<Post_Comments_Update_Column>;
   where?: Maybe<Post_Comments_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "post_comments" */
+/** Ordering options when selecting data from "post_comments". */
 export type Post_Comments_Order_By = {
   author_id?: Maybe<Order_By>;
   content?: Maybe<Order_By>;
@@ -3391,7 +3260,7 @@ export type Post_Comments_Order_By = {
   user?: Maybe<Users_Order_By>;
 };
 
-/** primary key columns input for table: "post_comments" */
+/** primary key columns input for table: post_comments */
 export type Post_Comments_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -3571,7 +3440,7 @@ export type Post_Likes_Aggregate = {
 export type Post_Likes_Aggregate_Fields = {
   __typename?: 'post_likes_aggregate_fields';
   avg?: Maybe<Post_Likes_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Post_Likes_Max_Fields>;
   min?: Maybe<Post_Likes_Min_Fields>;
   stddev?: Maybe<Post_Likes_Stddev_Fields>;
@@ -3608,6 +3477,7 @@ export type Post_Likes_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "post_likes" */
 export type Post_Likes_Arr_Rel_Insert_Input = {
   data: Array<Post_Likes_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Post_Likes_On_Conflict>;
 };
 
@@ -3624,9 +3494,9 @@ export type Post_Likes_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "post_likes". All fields are combined with a logical 'AND'. */
 export type Post_Likes_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Post_Likes_Bool_Exp>>>;
+  _and?: Maybe<Array<Post_Likes_Bool_Exp>>;
   _not?: Maybe<Post_Likes_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Post_Likes_Bool_Exp>>>;
+  _or?: Maybe<Array<Post_Likes_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   post?: Maybe<Posts_Bool_Exp>;
   post_id?: Maybe<Int_Comparison_Exp>;
@@ -3640,7 +3510,7 @@ export enum Post_Likes_Constraint {
   PostLikesPkey = 'post_likes_pkey'
 }
 
-/** input type for incrementing integer column in table "post_likes" */
+/** input type for incrementing numeric columns in table "post_likes" */
 export type Post_Likes_Inc_Input = {
   post_id?: Maybe<Scalars['Int']>;
 };
@@ -3687,26 +3557,20 @@ export type Post_Likes_Min_Order_By = {
 /** response of any mutation on the table "post_likes" */
 export type Post_Likes_Mutation_Response = {
   __typename?: 'post_likes_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Post_Likes>;
-};
-
-/** input type for inserting object relation for remote table "post_likes" */
-export type Post_Likes_Obj_Rel_Insert_Input = {
-  data: Post_Likes_Insert_Input;
-  on_conflict?: Maybe<Post_Likes_On_Conflict>;
 };
 
 /** on conflict condition type for table "post_likes" */
 export type Post_Likes_On_Conflict = {
   constraint: Post_Likes_Constraint;
-  update_columns: Array<Post_Likes_Update_Column>;
+  update_columns?: Array<Post_Likes_Update_Column>;
   where?: Maybe<Post_Likes_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "post_likes" */
+/** Ordering options when selecting data from "post_likes". */
 export type Post_Likes_Order_By = {
   created_at?: Maybe<Order_By>;
   post?: Maybe<Posts_Order_By>;
@@ -3715,7 +3579,7 @@ export type Post_Likes_Order_By = {
   user_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "post_likes" */
+/** primary key columns input for table: post_likes */
 export type Post_Likes_Pk_Columns_Input = {
   post_id: Scalars['Int'];
   user_id: Scalars['String'];
@@ -3829,11 +3693,7 @@ export type Post_Likes_Variance_Order_By = {
 export type Post_Tag = {
   __typename?: 'post_tag';
   created_at?: Maybe<Scalars['timestamptz']>;
-  /** An object relationship */
-  post: Posts;
   post_id: Scalars['Int'];
-  /** An object relationship */
-  tag: Tags;
   tag_id: Scalars['Int'];
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -3849,7 +3709,7 @@ export type Post_Tag_Aggregate = {
 export type Post_Tag_Aggregate_Fields = {
   __typename?: 'post_tag_aggregate_fields';
   avg?: Maybe<Post_Tag_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Post_Tag_Max_Fields>;
   min?: Maybe<Post_Tag_Min_Fields>;
   stddev?: Maybe<Post_Tag_Stddev_Fields>;
@@ -3886,6 +3746,7 @@ export type Post_Tag_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "post_tag" */
 export type Post_Tag_Arr_Rel_Insert_Input = {
   data: Array<Post_Tag_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Post_Tag_On_Conflict>;
 };
 
@@ -3904,13 +3765,11 @@ export type Post_Tag_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "post_tag". All fields are combined with a logical 'AND'. */
 export type Post_Tag_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Post_Tag_Bool_Exp>>>;
+  _and?: Maybe<Array<Post_Tag_Bool_Exp>>;
   _not?: Maybe<Post_Tag_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Post_Tag_Bool_Exp>>>;
+  _or?: Maybe<Array<Post_Tag_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  post?: Maybe<Posts_Bool_Exp>;
   post_id?: Maybe<Int_Comparison_Exp>;
-  tag?: Maybe<Tags_Bool_Exp>;
   tag_id?: Maybe<Int_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -3921,7 +3780,7 @@ export enum Post_Tag_Constraint {
   PostTagPkey = 'post_tag_pkey'
 }
 
-/** input type for incrementing integer column in table "post_tag" */
+/** input type for incrementing numeric columns in table "post_tag" */
 export type Post_Tag_Inc_Input = {
   post_id?: Maybe<Scalars['Int']>;
   tag_id?: Maybe<Scalars['Int']>;
@@ -3930,9 +3789,7 @@ export type Post_Tag_Inc_Input = {
 /** input type for inserting data into table "post_tag" */
 export type Post_Tag_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
-  post?: Maybe<Posts_Obj_Rel_Insert_Input>;
   post_id?: Maybe<Scalars['Int']>;
-  tag?: Maybe<Tags_Obj_Rel_Insert_Input>;
   tag_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -3974,36 +3831,28 @@ export type Post_Tag_Min_Order_By = {
 /** response of any mutation on the table "post_tag" */
 export type Post_Tag_Mutation_Response = {
   __typename?: 'post_tag_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Post_Tag>;
-};
-
-/** input type for inserting object relation for remote table "post_tag" */
-export type Post_Tag_Obj_Rel_Insert_Input = {
-  data: Post_Tag_Insert_Input;
-  on_conflict?: Maybe<Post_Tag_On_Conflict>;
 };
 
 /** on conflict condition type for table "post_tag" */
 export type Post_Tag_On_Conflict = {
   constraint: Post_Tag_Constraint;
-  update_columns: Array<Post_Tag_Update_Column>;
+  update_columns?: Array<Post_Tag_Update_Column>;
   where?: Maybe<Post_Tag_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "post_tag" */
+/** Ordering options when selecting data from "post_tag". */
 export type Post_Tag_Order_By = {
   created_at?: Maybe<Order_By>;
-  post?: Maybe<Posts_Order_By>;
   post_id?: Maybe<Order_By>;
-  tag?: Maybe<Tags_Order_By>;
   tag_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "post_tag" */
+/** primary key columns input for table: post_tag */
 export type Post_Tag_Pk_Columns_Input = {
   post_id: Scalars['Int'];
   tag_id: Scalars['Int'];
@@ -4135,17 +3984,7 @@ export type Post_Tag_Variance_Order_By = {
 /** columns and relationships of "posts" */
 export type Posts = {
   __typename?: 'posts';
-  /** An object relationship */
-  author: Users;
   author_id: Scalars['String'];
-  /** An array relationship */
-  bookmarks: Array<Bookmarks>;
-  /** An aggregated array relationship */
-  bookmarks_aggregate: Bookmarks_Aggregate;
-  /** An array relationship */
-  comments: Array<Post_Comments>;
-  /** An aggregated array relationship */
-  comments_aggregate: Post_Comments_Aggregate;
   content: Scalars['String'];
   created_at?: Maybe<Scalars['timestamptz']>;
   header_image?: Maybe<Scalars['String']>;
@@ -4157,40 +3996,22 @@ export type Posts = {
   is_published: Scalars['Boolean'];
   likes: Scalars['Int'];
   /** An array relationship */
-  post_likes: Array<Post_Likes>;
-  /** An aggregated array relationship */
-  post_likes_aggregate: Post_Likes_Aggregate;
+  post_comments: Array<Post_Comments>;
+  /** An aggregate relationship */
+  post_comments_aggregate: Post_Comments_Aggregate;
   /** An array relationship */
   post_tags: Array<Post_Tag>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   post_tags_aggregate: Post_Tag_Aggregate;
   title: Scalars['String'];
   updated_at?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  user: Users;
 };
 
 
 /** columns and relationships of "posts" */
-export type PostsBookmarksArgs = {
-  distinct_on?: Maybe<Array<Bookmarks_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Bookmarks_Order_By>>;
-  where?: Maybe<Bookmarks_Bool_Exp>;
-};
-
-
-/** columns and relationships of "posts" */
-export type PostsBookmarks_AggregateArgs = {
-  distinct_on?: Maybe<Array<Bookmarks_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Bookmarks_Order_By>>;
-  where?: Maybe<Bookmarks_Bool_Exp>;
-};
-
-
-/** columns and relationships of "posts" */
-export type PostsCommentsArgs = {
+export type PostsPost_CommentsArgs = {
   distinct_on?: Maybe<Array<Post_Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -4200,32 +4021,12 @@ export type PostsCommentsArgs = {
 
 
 /** columns and relationships of "posts" */
-export type PostsComments_AggregateArgs = {
+export type PostsPost_Comments_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Post_Comments_Order_By>>;
   where?: Maybe<Post_Comments_Bool_Exp>;
-};
-
-
-/** columns and relationships of "posts" */
-export type PostsPost_LikesArgs = {
-  distinct_on?: Maybe<Array<Post_Likes_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Post_Likes_Order_By>>;
-  where?: Maybe<Post_Likes_Bool_Exp>;
-};
-
-
-/** columns and relationships of "posts" */
-export type PostsPost_Likes_AggregateArgs = {
-  distinct_on?: Maybe<Array<Post_Likes_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Post_Likes_Order_By>>;
-  where?: Maybe<Post_Likes_Bool_Exp>;
 };
 
 
@@ -4259,7 +4060,7 @@ export type Posts_Aggregate = {
 export type Posts_Aggregate_Fields = {
   __typename?: 'posts_aggregate_fields';
   avg?: Maybe<Posts_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Posts_Max_Fields>;
   min?: Maybe<Posts_Min_Fields>;
   stddev?: Maybe<Posts_Stddev_Fields>;
@@ -4296,6 +4097,7 @@ export type Posts_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "posts" */
 export type Posts_Arr_Rel_Insert_Input = {
   data: Array<Posts_Insert_Input>;
+  /** on conflict condition */
   on_conflict?: Maybe<Posts_On_Conflict>;
 };
 
@@ -4314,32 +4116,34 @@ export type Posts_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "posts". All fields are combined with a logical 'AND'. */
 export type Posts_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Posts_Bool_Exp>>>;
+  _and?: Maybe<Array<Posts_Bool_Exp>>;
   _not?: Maybe<Posts_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Posts_Bool_Exp>>>;
-  author?: Maybe<Users_Bool_Exp>;
+  _or?: Maybe<Array<Posts_Bool_Exp>>;
   author_id?: Maybe<String_Comparison_Exp>;
-  bookmarks?: Maybe<Bookmarks_Bool_Exp>;
-  comments?: Maybe<Post_Comments_Bool_Exp>;
   content?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   header_image?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  is_bookmarked_by_user?: Maybe<Boolean_Comparison_Exp>;
+  is_liked_by_user?: Maybe<Boolean_Comparison_Exp>;
   is_published?: Maybe<Boolean_Comparison_Exp>;
   likes?: Maybe<Int_Comparison_Exp>;
-  post_likes?: Maybe<Post_Likes_Bool_Exp>;
+  post_comments?: Maybe<Post_Comments_Bool_Exp>;
   post_tags?: Maybe<Post_Tag_Bool_Exp>;
   title?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "posts" */
 export enum Posts_Constraint {
   /** unique or primary key constraint */
+  PostsIdKey = 'posts_id_key',
+  /** unique or primary key constraint */
   PostsPkey = 'posts_pkey'
 }
 
-/** input type for incrementing integer column in table "posts" */
+/** input type for incrementing numeric columns in table "posts" */
 export type Posts_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   likes?: Maybe<Scalars['Int']>;
@@ -4347,20 +4151,18 @@ export type Posts_Inc_Input = {
 
 /** input type for inserting data into table "posts" */
 export type Posts_Insert_Input = {
-  author?: Maybe<Users_Obj_Rel_Insert_Input>;
   author_id?: Maybe<Scalars['String']>;
-  bookmarks?: Maybe<Bookmarks_Arr_Rel_Insert_Input>;
-  comments?: Maybe<Post_Comments_Arr_Rel_Insert_Input>;
   content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   header_image?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   is_published?: Maybe<Scalars['Boolean']>;
   likes?: Maybe<Scalars['Int']>;
-  post_likes?: Maybe<Post_Likes_Arr_Rel_Insert_Input>;
+  post_comments?: Maybe<Post_Comments_Arr_Rel_Insert_Input>;
   post_tags?: Maybe<Post_Tag_Arr_Rel_Insert_Input>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -4416,44 +4218,43 @@ export type Posts_Min_Order_By = {
 /** response of any mutation on the table "posts" */
 export type Posts_Mutation_Response = {
   __typename?: 'posts_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Posts>;
 };
 
 /** input type for inserting object relation for remote table "posts" */
 export type Posts_Obj_Rel_Insert_Input = {
   data: Posts_Insert_Input;
+  /** on conflict condition */
   on_conflict?: Maybe<Posts_On_Conflict>;
 };
 
 /** on conflict condition type for table "posts" */
 export type Posts_On_Conflict = {
   constraint: Posts_Constraint;
-  update_columns: Array<Posts_Update_Column>;
+  update_columns?: Array<Posts_Update_Column>;
   where?: Maybe<Posts_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "posts" */
+/** Ordering options when selecting data from "posts". */
 export type Posts_Order_By = {
-  author?: Maybe<Users_Order_By>;
   author_id?: Maybe<Order_By>;
-  bookmarks_aggregate?: Maybe<Bookmarks_Aggregate_Order_By>;
-  comments_aggregate?: Maybe<Post_Comments_Aggregate_Order_By>;
   content?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   header_image?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   is_published?: Maybe<Order_By>;
   likes?: Maybe<Order_By>;
-  post_likes_aggregate?: Maybe<Post_Likes_Aggregate_Order_By>;
+  post_comments_aggregate?: Maybe<Post_Comments_Aggregate_Order_By>;
   post_tags_aggregate?: Maybe<Post_Tag_Aggregate_Order_By>;
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
 };
 
-/** primary key columns input for table: "posts" */
+/** primary key columns input for table: posts */
 export type Posts_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -4606,24 +4407,23 @@ export type Posts_Variance_Order_By = {
   likes?: Maybe<Order_By>;
 };
 
-/** query root */
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "bookmarks" */
+  /** An array relationship */
   bookmarks: Array<Bookmarks>;
-  /** fetch aggregated fields from the table: "bookmarks" */
+  /** An aggregate relationship */
   bookmarks_aggregate: Bookmarks_Aggregate;
   /** fetch data from the table: "bookmarks" using primary key columns */
   bookmarks_by_pk?: Maybe<Bookmarks>;
-  /** fetch data from the table: "followers" */
+  /** An array relationship */
   followers: Array<Followers>;
-  /** fetch aggregated fields from the table: "followers" */
+  /** An aggregate relationship */
   followers_aggregate: Followers_Aggregate;
   /** fetch data from the table: "followers" using primary key columns */
   followers_by_pk?: Maybe<Followers>;
-  /** fetch data from the table: "followings" */
+  /** An array relationship */
   followings: Array<Followings>;
-  /** fetch aggregated fields from the table: "followings" */
+  /** An aggregate relationship */
   followings_aggregate: Followings_Aggregate;
   /** fetch data from the table: "followings" using primary key columns */
   followings_by_pk?: Maybe<Followings>;
@@ -4633,9 +4433,9 @@ export type Query_Root = {
   livestock_likes_aggregate: Livestock_Likes_Aggregate;
   /** fetch data from the table: "livestock_likes" using primary key columns */
   livestock_likes_by_pk?: Maybe<Livestock_Likes>;
-  /** fetch data from the table: "livestocks" */
+  /** An array relationship */
   livestocks: Array<Livestocks>;
-  /** fetch aggregated fields from the table: "livestocks" */
+  /** An aggregate relationship */
   livestocks_aggregate: Livestocks_Aggregate;
   /** fetch data from the table: "livestocks" using primary key columns */
   livestocks_by_pk?: Maybe<Livestocks>;
@@ -4643,9 +4443,9 @@ export type Query_Root = {
   online_users: Array<Online_Users>;
   /** fetch aggregated fields from the table: "online_users" */
   online_users_aggregate: Online_Users_Aggregate;
-  /** fetch data from the table: "post_comment_likes" */
+  /** An array relationship */
   post_comment_likes: Array<Post_Comment_Likes>;
-  /** fetch aggregated fields from the table: "post_comment_likes" */
+  /** An aggregate relationship */
   post_comment_likes_aggregate: Post_Comment_Likes_Aggregate;
   /** fetch data from the table: "post_comment_likes" using primary key columns */
   post_comment_likes_by_pk?: Maybe<Post_Comment_Likes>;
@@ -4655,9 +4455,9 @@ export type Query_Root = {
   post_comment_replies_aggregate: Post_Comment_Replies_Aggregate;
   /** fetch data from the table: "post_comment_replies" using primary key columns */
   post_comment_replies_by_pk?: Maybe<Post_Comment_Replies>;
-  /** fetch data from the table: "post_comments" */
+  /** An array relationship */
   post_comments: Array<Post_Comments>;
-  /** fetch aggregated fields from the table: "post_comments" */
+  /** An aggregate relationship */
   post_comments_aggregate: Post_Comments_Aggregate;
   /** fetch data from the table: "post_comments" using primary key columns */
   post_comments_by_pk?: Maybe<Post_Comments>;
@@ -4673,9 +4473,9 @@ export type Query_Root = {
   post_tag_aggregate: Post_Tag_Aggregate;
   /** fetch data from the table: "post_tag" using primary key columns */
   post_tag_by_pk?: Maybe<Post_Tag>;
-  /** fetch data from the table: "posts" */
+  /** An array relationship */
   posts: Array<Posts>;
-  /** fetch aggregated fields from the table: "posts" */
+  /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
@@ -4694,7 +4494,6 @@ export type Query_Root = {
 };
 
 
-/** query root */
 export type Query_RootBookmarksArgs = {
   distinct_on?: Maybe<Array<Bookmarks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4704,7 +4503,6 @@ export type Query_RootBookmarksArgs = {
 };
 
 
-/** query root */
 export type Query_RootBookmarks_AggregateArgs = {
   distinct_on?: Maybe<Array<Bookmarks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4714,13 +4512,11 @@ export type Query_RootBookmarks_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootBookmarks_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootFollowersArgs = {
   distinct_on?: Maybe<Array<Followers_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4730,7 +4526,6 @@ export type Query_RootFollowersArgs = {
 };
 
 
-/** query root */
 export type Query_RootFollowers_AggregateArgs = {
   distinct_on?: Maybe<Array<Followers_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4740,13 +4535,11 @@ export type Query_RootFollowers_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootFollowers_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootFollowingsArgs = {
   distinct_on?: Maybe<Array<Followings_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4756,7 +4549,6 @@ export type Query_RootFollowingsArgs = {
 };
 
 
-/** query root */
 export type Query_RootFollowings_AggregateArgs = {
   distinct_on?: Maybe<Array<Followings_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4766,13 +4558,11 @@ export type Query_RootFollowings_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootFollowings_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootLivestock_LikesArgs = {
   distinct_on?: Maybe<Array<Livestock_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4782,7 +4572,6 @@ export type Query_RootLivestock_LikesArgs = {
 };
 
 
-/** query root */
 export type Query_RootLivestock_Likes_AggregateArgs = {
   distinct_on?: Maybe<Array<Livestock_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4792,13 +4581,11 @@ export type Query_RootLivestock_Likes_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootLivestock_Likes_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootLivestocksArgs = {
   distinct_on?: Maybe<Array<Livestocks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4808,7 +4595,6 @@ export type Query_RootLivestocksArgs = {
 };
 
 
-/** query root */
 export type Query_RootLivestocks_AggregateArgs = {
   distinct_on?: Maybe<Array<Livestocks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4818,13 +4604,11 @@ export type Query_RootLivestocks_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootLivestocks_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootOnline_UsersArgs = {
   distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4834,7 +4618,6 @@ export type Query_RootOnline_UsersArgs = {
 };
 
 
-/** query root */
 export type Query_RootOnline_Users_AggregateArgs = {
   distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4844,7 +4627,6 @@ export type Query_RootOnline_Users_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Comment_LikesArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4854,7 +4636,6 @@ export type Query_RootPost_Comment_LikesArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Comment_Likes_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4864,13 +4645,11 @@ export type Query_RootPost_Comment_Likes_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Comment_Likes_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootPost_Comment_RepliesArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Replies_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4880,7 +4659,6 @@ export type Query_RootPost_Comment_RepliesArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Comment_Replies_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Replies_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4890,13 +4668,11 @@ export type Query_RootPost_Comment_Replies_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Comment_Replies_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootPost_CommentsArgs = {
   distinct_on?: Maybe<Array<Post_Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4906,7 +4682,6 @@ export type Query_RootPost_CommentsArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Comments_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4916,13 +4691,11 @@ export type Query_RootPost_Comments_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Comments_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootPost_LikesArgs = {
   distinct_on?: Maybe<Array<Post_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4932,7 +4705,6 @@ export type Query_RootPost_LikesArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Likes_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4942,14 +4714,12 @@ export type Query_RootPost_Likes_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Likes_By_PkArgs = {
   post_id: Scalars['Int'];
   user_id: Scalars['String'];
 };
 
 
-/** query root */
 export type Query_RootPost_TagArgs = {
   distinct_on?: Maybe<Array<Post_Tag_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4959,7 +4729,6 @@ export type Query_RootPost_TagArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Tag_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Tag_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4969,14 +4738,12 @@ export type Query_RootPost_Tag_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootPost_Tag_By_PkArgs = {
   post_id: Scalars['Int'];
   tag_id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4986,7 +4753,6 @@ export type Query_RootPostsArgs = {
 };
 
 
-/** query root */
 export type Query_RootPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4996,13 +4762,11 @@ export type Query_RootPosts_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootPosts_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootTagsArgs = {
   distinct_on?: Maybe<Array<Tags_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5012,7 +4776,6 @@ export type Query_RootTagsArgs = {
 };
 
 
-/** query root */
 export type Query_RootTags_AggregateArgs = {
   distinct_on?: Maybe<Array<Tags_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5022,13 +4785,11 @@ export type Query_RootTags_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootTags_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** query root */
 export type Query_RootUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5038,7 +4799,6 @@ export type Query_RootUsersArgs = {
 };
 
 
-/** query root */
 export type Query_RootUsers_AggregateArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5048,29 +4808,27 @@ export type Query_RootUsers_AggregateArgs = {
 };
 
 
-/** query root */
 export type Query_RootUsers_By_PkArgs = {
   id: Scalars['String'];
 };
 
-/** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "bookmarks" */
+  /** An array relationship */
   bookmarks: Array<Bookmarks>;
-  /** fetch aggregated fields from the table: "bookmarks" */
+  /** An aggregate relationship */
   bookmarks_aggregate: Bookmarks_Aggregate;
   /** fetch data from the table: "bookmarks" using primary key columns */
   bookmarks_by_pk?: Maybe<Bookmarks>;
-  /** fetch data from the table: "followers" */
+  /** An array relationship */
   followers: Array<Followers>;
-  /** fetch aggregated fields from the table: "followers" */
+  /** An aggregate relationship */
   followers_aggregate: Followers_Aggregate;
   /** fetch data from the table: "followers" using primary key columns */
   followers_by_pk?: Maybe<Followers>;
-  /** fetch data from the table: "followings" */
+  /** An array relationship */
   followings: Array<Followings>;
-  /** fetch aggregated fields from the table: "followings" */
+  /** An aggregate relationship */
   followings_aggregate: Followings_Aggregate;
   /** fetch data from the table: "followings" using primary key columns */
   followings_by_pk?: Maybe<Followings>;
@@ -5080,9 +4838,9 @@ export type Subscription_Root = {
   livestock_likes_aggregate: Livestock_Likes_Aggregate;
   /** fetch data from the table: "livestock_likes" using primary key columns */
   livestock_likes_by_pk?: Maybe<Livestock_Likes>;
-  /** fetch data from the table: "livestocks" */
+  /** An array relationship */
   livestocks: Array<Livestocks>;
-  /** fetch aggregated fields from the table: "livestocks" */
+  /** An aggregate relationship */
   livestocks_aggregate: Livestocks_Aggregate;
   /** fetch data from the table: "livestocks" using primary key columns */
   livestocks_by_pk?: Maybe<Livestocks>;
@@ -5090,9 +4848,9 @@ export type Subscription_Root = {
   online_users: Array<Online_Users>;
   /** fetch aggregated fields from the table: "online_users" */
   online_users_aggregate: Online_Users_Aggregate;
-  /** fetch data from the table: "post_comment_likes" */
+  /** An array relationship */
   post_comment_likes: Array<Post_Comment_Likes>;
-  /** fetch aggregated fields from the table: "post_comment_likes" */
+  /** An aggregate relationship */
   post_comment_likes_aggregate: Post_Comment_Likes_Aggregate;
   /** fetch data from the table: "post_comment_likes" using primary key columns */
   post_comment_likes_by_pk?: Maybe<Post_Comment_Likes>;
@@ -5102,9 +4860,9 @@ export type Subscription_Root = {
   post_comment_replies_aggregate: Post_Comment_Replies_Aggregate;
   /** fetch data from the table: "post_comment_replies" using primary key columns */
   post_comment_replies_by_pk?: Maybe<Post_Comment_Replies>;
-  /** fetch data from the table: "post_comments" */
+  /** An array relationship */
   post_comments: Array<Post_Comments>;
-  /** fetch aggregated fields from the table: "post_comments" */
+  /** An aggregate relationship */
   post_comments_aggregate: Post_Comments_Aggregate;
   /** fetch data from the table: "post_comments" using primary key columns */
   post_comments_by_pk?: Maybe<Post_Comments>;
@@ -5120,9 +4878,9 @@ export type Subscription_Root = {
   post_tag_aggregate: Post_Tag_Aggregate;
   /** fetch data from the table: "post_tag" using primary key columns */
   post_tag_by_pk?: Maybe<Post_Tag>;
-  /** fetch data from the table: "posts" */
+  /** An array relationship */
   posts: Array<Posts>;
-  /** fetch aggregated fields from the table: "posts" */
+  /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
@@ -5141,7 +4899,6 @@ export type Subscription_Root = {
 };
 
 
-/** subscription root */
 export type Subscription_RootBookmarksArgs = {
   distinct_on?: Maybe<Array<Bookmarks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5151,7 +4908,6 @@ export type Subscription_RootBookmarksArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootBookmarks_AggregateArgs = {
   distinct_on?: Maybe<Array<Bookmarks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5161,13 +4917,11 @@ export type Subscription_RootBookmarks_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootBookmarks_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootFollowersArgs = {
   distinct_on?: Maybe<Array<Followers_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5177,7 +4931,6 @@ export type Subscription_RootFollowersArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootFollowers_AggregateArgs = {
   distinct_on?: Maybe<Array<Followers_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5187,13 +4940,11 @@ export type Subscription_RootFollowers_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootFollowers_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootFollowingsArgs = {
   distinct_on?: Maybe<Array<Followings_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5203,7 +4954,6 @@ export type Subscription_RootFollowingsArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootFollowings_AggregateArgs = {
   distinct_on?: Maybe<Array<Followings_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5213,13 +4963,11 @@ export type Subscription_RootFollowings_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootFollowings_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootLivestock_LikesArgs = {
   distinct_on?: Maybe<Array<Livestock_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5229,7 +4977,6 @@ export type Subscription_RootLivestock_LikesArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootLivestock_Likes_AggregateArgs = {
   distinct_on?: Maybe<Array<Livestock_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5239,13 +4986,11 @@ export type Subscription_RootLivestock_Likes_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootLivestock_Likes_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootLivestocksArgs = {
   distinct_on?: Maybe<Array<Livestocks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5255,7 +5000,6 @@ export type Subscription_RootLivestocksArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootLivestocks_AggregateArgs = {
   distinct_on?: Maybe<Array<Livestocks_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5265,13 +5009,11 @@ export type Subscription_RootLivestocks_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootLivestocks_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootOnline_UsersArgs = {
   distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5281,7 +5023,6 @@ export type Subscription_RootOnline_UsersArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootOnline_Users_AggregateArgs = {
   distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5291,7 +5032,6 @@ export type Subscription_RootOnline_Users_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comment_LikesArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5301,7 +5041,6 @@ export type Subscription_RootPost_Comment_LikesArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comment_Likes_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5311,13 +5050,11 @@ export type Subscription_RootPost_Comment_Likes_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comment_Likes_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comment_RepliesArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Replies_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5327,7 +5064,6 @@ export type Subscription_RootPost_Comment_RepliesArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comment_Replies_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Comment_Replies_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5337,13 +5073,11 @@ export type Subscription_RootPost_Comment_Replies_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comment_Replies_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_CommentsArgs = {
   distinct_on?: Maybe<Array<Post_Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5353,7 +5087,6 @@ export type Subscription_RootPost_CommentsArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comments_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5363,13 +5096,11 @@ export type Subscription_RootPost_Comments_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Comments_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_LikesArgs = {
   distinct_on?: Maybe<Array<Post_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5379,7 +5110,6 @@ export type Subscription_RootPost_LikesArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Likes_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Likes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5389,14 +5119,12 @@ export type Subscription_RootPost_Likes_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Likes_By_PkArgs = {
   post_id: Scalars['Int'];
   user_id: Scalars['String'];
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_TagArgs = {
   distinct_on?: Maybe<Array<Post_Tag_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5406,7 +5134,6 @@ export type Subscription_RootPost_TagArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Tag_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Tag_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5416,14 +5143,12 @@ export type Subscription_RootPost_Tag_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPost_Tag_By_PkArgs = {
   post_id: Scalars['Int'];
   tag_id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5433,7 +5158,6 @@ export type Subscription_RootPostsArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5443,13 +5167,11 @@ export type Subscription_RootPosts_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootPosts_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootTagsArgs = {
   distinct_on?: Maybe<Array<Tags_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5459,7 +5181,6 @@ export type Subscription_RootTagsArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootTags_AggregateArgs = {
   distinct_on?: Maybe<Array<Tags_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5469,13 +5190,11 @@ export type Subscription_RootTags_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootTags_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-/** subscription root */
 export type Subscription_RootUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5485,7 +5204,6 @@ export type Subscription_RootUsersArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootUsers_AggregateArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5495,7 +5213,6 @@ export type Subscription_RootUsers_AggregateArgs = {
 };
 
 
-/** subscription root */
 export type Subscription_RootUsers_By_PkArgs = {
   id: Scalars['String'];
 };
@@ -5509,31 +5226,7 @@ export type Tags = {
   id: Scalars['Int'];
   label: Scalars['String'];
   name: Scalars['String'];
-  /** An array relationship */
-  tag_posts: Array<Post_Tag>;
-  /** An aggregated array relationship */
-  tag_posts_aggregate: Post_Tag_Aggregate;
   updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-
-/** columns and relationships of "tags" */
-export type TagsTag_PostsArgs = {
-  distinct_on?: Maybe<Array<Post_Tag_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Post_Tag_Order_By>>;
-  where?: Maybe<Post_Tag_Bool_Exp>;
-};
-
-
-/** columns and relationships of "tags" */
-export type TagsTag_Posts_AggregateArgs = {
-  distinct_on?: Maybe<Array<Post_Tag_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Post_Tag_Order_By>>;
-  where?: Maybe<Post_Tag_Bool_Exp>;
 };
 
 /** aggregated selection of "tags" */
@@ -5547,7 +5240,7 @@ export type Tags_Aggregate = {
 export type Tags_Aggregate_Fields = {
   __typename?: 'tags_aggregate_fields';
   avg?: Maybe<Tags_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Tags_Max_Fields>;
   min?: Maybe<Tags_Min_Fields>;
   stddev?: Maybe<Tags_Stddev_Fields>;
@@ -5566,60 +5259,35 @@ export type Tags_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "tags" */
-export type Tags_Aggregate_Order_By = {
-  avg?: Maybe<Tags_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Tags_Max_Order_By>;
-  min?: Maybe<Tags_Min_Order_By>;
-  stddev?: Maybe<Tags_Stddev_Order_By>;
-  stddev_pop?: Maybe<Tags_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Tags_Stddev_Samp_Order_By>;
-  sum?: Maybe<Tags_Sum_Order_By>;
-  var_pop?: Maybe<Tags_Var_Pop_Order_By>;
-  var_samp?: Maybe<Tags_Var_Samp_Order_By>;
-  variance?: Maybe<Tags_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "tags" */
-export type Tags_Arr_Rel_Insert_Input = {
-  data: Array<Tags_Insert_Input>;
-  on_conflict?: Maybe<Tags_On_Conflict>;
-};
-
 /** aggregate avg on columns */
 export type Tags_Avg_Fields = {
   __typename?: 'tags_avg_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by avg() on columns of table "tags" */
-export type Tags_Avg_Order_By = {
-  id?: Maybe<Order_By>;
-};
-
 /** Boolean expression to filter rows from the table "tags". All fields are combined with a logical 'AND'. */
 export type Tags_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Tags_Bool_Exp>>>;
+  _and?: Maybe<Array<Tags_Bool_Exp>>;
   _not?: Maybe<Tags_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Tags_Bool_Exp>>>;
+  _or?: Maybe<Array<Tags_Bool_Exp>>;
   color?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   creator?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   label?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
-  tag_posts?: Maybe<Post_Tag_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "tags" */
 export enum Tags_Constraint {
   /** unique or primary key constraint */
+  TagsIdKey = 'tags_id_key',
+  /** unique or primary key constraint */
   TagsPkey = 'tags_pkey'
 }
 
-/** input type for incrementing integer column in table "tags" */
+/** input type for incrementing numeric columns in table "tags" */
 export type Tags_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -5632,7 +5300,6 @@ export type Tags_Insert_Input = {
   id?: Maybe<Scalars['Int']>;
   label?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  tag_posts?: Maybe<Post_Tag_Arr_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -5648,17 +5315,6 @@ export type Tags_Max_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by max() on columns of table "tags" */
-export type Tags_Max_Order_By = {
-  color?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
-  creator?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  label?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
 /** aggregate min on columns */
 export type Tags_Min_Fields = {
   __typename?: 'tags_min_fields';
@@ -5671,40 +5327,23 @@ export type Tags_Min_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by min() on columns of table "tags" */
-export type Tags_Min_Order_By = {
-  color?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
-  creator?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  label?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
 /** response of any mutation on the table "tags" */
 export type Tags_Mutation_Response = {
   __typename?: 'tags_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Tags>;
-};
-
-/** input type for inserting object relation for remote table "tags" */
-export type Tags_Obj_Rel_Insert_Input = {
-  data: Tags_Insert_Input;
-  on_conflict?: Maybe<Tags_On_Conflict>;
 };
 
 /** on conflict condition type for table "tags" */
 export type Tags_On_Conflict = {
   constraint: Tags_Constraint;
-  update_columns: Array<Tags_Update_Column>;
+  update_columns?: Array<Tags_Update_Column>;
   where?: Maybe<Tags_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "tags" */
+/** Ordering options when selecting data from "tags". */
 export type Tags_Order_By = {
   color?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
@@ -5712,11 +5351,10 @@ export type Tags_Order_By = {
   id?: Maybe<Order_By>;
   label?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  tag_posts_aggregate?: Maybe<Post_Tag_Aggregate_Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "tags" */
+/** primary key columns input for table: tags */
 export type Tags_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
@@ -5756,20 +5394,10 @@ export type Tags_Stddev_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev() on columns of table "tags" */
-export type Tags_Stddev_Order_By = {
-  id?: Maybe<Order_By>;
-};
-
 /** aggregate stddev_pop on columns */
 export type Tags_Stddev_Pop_Fields = {
   __typename?: 'tags_stddev_pop_fields';
   id?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_pop() on columns of table "tags" */
-export type Tags_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -5778,20 +5406,10 @@ export type Tags_Stddev_Samp_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_samp() on columns of table "tags" */
-export type Tags_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-};
-
 /** aggregate sum on columns */
 export type Tags_Sum_Fields = {
   __typename?: 'tags_sum_fields';
   id?: Maybe<Scalars['Int']>;
-};
-
-/** order by sum() on columns of table "tags" */
-export type Tags_Sum_Order_By = {
-  id?: Maybe<Order_By>;
 };
 
 /** update columns of table "tags" */
@@ -5818,20 +5436,10 @@ export type Tags_Var_Pop_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_pop() on columns of table "tags" */
-export type Tags_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-};
-
 /** aggregate var_samp on columns */
 export type Tags_Var_Samp_Fields = {
   __typename?: 'tags_var_samp_fields';
   id?: Maybe<Scalars['Float']>;
-};
-
-/** order by var_samp() on columns of table "tags" */
-export type Tags_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -5840,13 +5448,8 @@ export type Tags_Variance_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by variance() on columns of table "tags" */
-export type Tags_Variance_Order_By = {
-  id?: Maybe<Order_By>;
-};
 
-
-/** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>;
   _gt?: Maybe<Scalars['timestamptz']>;
@@ -5860,7 +5463,7 @@ export type Timestamptz_Comparison_Exp = {
 };
 
 
-/** expression to compare columns of type timetz. All fields are combined with logical 'AND'. */
+/** Boolean expression to compare columns of type "timetz". All fields are combined with logical 'AND'. */
 export type Timetz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timetz']>;
   _gt?: Maybe<Scalars['timetz']>;
@@ -5878,41 +5481,41 @@ export type Users = {
   __typename?: 'users';
   /** An array relationship */
   bookmarks: Array<Bookmarks>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   bookmarks_aggregate: Bookmarks_Aggregate;
   created_at: Scalars['timetz'];
   email?: Maybe<Scalars['String']>;
   /** An array relationship */
   followers: Array<Followers>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   followers_aggregate: Followers_Aggregate;
   /** An array relationship */
   followings: Array<Followings>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   followings_aggregate: Followings_Aggregate;
   id: Scalars['String'];
   last_seen?: Maybe<Scalars['timestamptz']>;
   /** An array relationship */
   like_many_posts: Array<Post_Likes>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   like_many_posts_aggregate: Post_Likes_Aggregate;
-  /** An array relationship */
+  /** fetch data from the table: "livestock_likes" */
   livestock_likes: Array<Livestock_Likes>;
-  /** An aggregated array relationship */
+  /** fetch aggregated fields from the table: "livestock_likes" */
   livestock_likes_aggregate: Livestock_Likes_Aggregate;
   /** An array relationship */
   livestocks: Array<Livestocks>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   livestocks_aggregate: Livestocks_Aggregate;
   name: Scalars['String'];
   picture?: Maybe<Scalars['String']>;
   /** An array relationship */
   post_comments: Array<Post_Comments>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   post_comments_aggregate: Post_Comments_Aggregate;
   /** An array relationship */
   posts: Array<Posts>;
-  /** An aggregated array relationship */
+  /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
   type?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -6088,7 +5691,7 @@ export type Users_Aggregate = {
 /** aggregate fields of "users" */
 export type Users_Aggregate_Fields = {
   __typename?: 'users_aggregate_fields';
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   max?: Maybe<Users_Max_Fields>;
   min?: Maybe<Users_Min_Fields>;
 };
@@ -6100,24 +5703,11 @@ export type Users_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "users" */
-export type Users_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<Users_Max_Order_By>;
-  min?: Maybe<Users_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "users" */
-export type Users_Arr_Rel_Insert_Input = {
-  data: Array<Users_Insert_Input>;
-  on_conflict?: Maybe<Users_On_Conflict>;
-};
-
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
 export type Users_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  _and?: Maybe<Array<Users_Bool_Exp>>;
   _not?: Maybe<Users_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  _or?: Maybe<Array<Users_Bool_Exp>>;
   bookmarks?: Maybe<Bookmarks_Bool_Exp>;
   created_at?: Maybe<Timetz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
@@ -6175,18 +5765,6 @@ export type Users_Max_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by max() on columns of table "users" */
-export type Users_Max_Order_By = {
-  created_at?: Maybe<Order_By>;
-  email?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  last_seen?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  picture?: Maybe<Order_By>;
-  type?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
@@ -6200,41 +5778,30 @@ export type Users_Min_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by min() on columns of table "users" */
-export type Users_Min_Order_By = {
-  created_at?: Maybe<Order_By>;
-  email?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  last_seen?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  picture?: Maybe<Order_By>;
-  type?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
 /** response of any mutation on the table "users" */
 export type Users_Mutation_Response = {
   __typename?: 'users_mutation_response';
-  /** number of affected rows by the mutation */
+  /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
+  /** data from the rows affected by the mutation */
   returning: Array<Users>;
 };
 
 /** input type for inserting object relation for remote table "users" */
 export type Users_Obj_Rel_Insert_Input = {
   data: Users_Insert_Input;
+  /** on conflict condition */
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
 /** on conflict condition type for table "users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint;
-  update_columns: Array<Users_Update_Column>;
+  update_columns?: Array<Users_Update_Column>;
   where?: Maybe<Users_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "users" */
+/** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
   bookmarks_aggregate?: Maybe<Bookmarks_Aggregate_Order_By>;
   created_at?: Maybe<Order_By>;
@@ -6254,7 +5821,7 @@ export type Users_Order_By = {
   updated_at?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "users" */
+/** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
   id: Scalars['String'];
 };
@@ -6342,7 +5909,6 @@ export type Insert_New_UserMutation = (
 
 export type Create_PostMutationVariables = Exact<{
   author_id: Scalars['String'];
-  data: Array<Post_Tag_Insert_Input> | Post_Tag_Insert_Input;
   content: Scalars['String'];
   header_image: Scalars['String'];
   title: Scalars['String'];
@@ -6365,7 +5931,18 @@ export type GetPostsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'author_id' | 'content' | 'created_at' | 'header_image' | 'id' | 'is_bookmarked_by_user' | 'is_liked_by_user' | 'likes'>
+    & Pick<Posts, 'author_id' | 'content' | 'created_at' | 'header_image' | 'is_bookmarked_by_user' | 'is_liked_by_user' | 'likes' | 'id'>
+  )> }
+);
+
+export type Get_TagsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Get_TagsQuery = (
+  { __typename?: 'query_root' }
+  & { tags: Array<(
+    { __typename?: 'tags' }
+    & Pick<Tags, 'id' | 'name' | 'label' | 'color' | 'creator' | 'created_at' | 'updated_at'>
   )> }
 );
 
@@ -6446,9 +6023,9 @@ export type Insert_New_UserMutationHookResult = ReturnType<typeof useInsert_New_
 export type Insert_New_UserMutationResult = Apollo.MutationResult<Insert_New_UserMutation>;
 export type Insert_New_UserMutationOptions = Apollo.BaseMutationOptions<Insert_New_UserMutation, Insert_New_UserMutationVariables>;
 export const Create_PostDocument = gql`
-    mutation create_post($author_id: String!, $data: [post_tag_insert_input!]!, $content: String!, $header_image: String!, $title: String!, $is_published: Boolean) {
+    mutation create_post($author_id: String!, $content: String!, $header_image: String!, $title: String!, $is_published: Boolean) {
   insert_posts_one(
-    object: {post_tags: {data: $data}, author_id: $author_id, content: $content, header_image: $header_image, title: $title, is_published: $is_published}
+    object: {author_id: $author_id, content: $content, header_image: $header_image, title: $title, is_published: $is_published}
   ) {
     id
   }
@@ -6470,7 +6047,6 @@ export type Create_PostMutationFn = Apollo.MutationFunction<Create_PostMutation,
  * const [createPostMutation, { data, loading, error }] = useCreate_PostMutation({
  *   variables: {
  *      author_id: // value for 'author_id'
- *      data: // value for 'data'
  *      content: // value for 'content'
  *      header_image: // value for 'header_image'
  *      title: // value for 'title'
@@ -6492,10 +6068,10 @@ export const GetPostsDocument = gql`
     content
     created_at
     header_image
-    id
     is_bookmarked_by_user
     is_liked_by_user
     likes
+    id
   }
 }
     `;
@@ -6526,3 +6102,43 @@ export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
 export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
+export const Get_TagsDocument = gql`
+    query get_tags {
+  tags {
+    id
+    name
+    label
+    color
+    creator
+    created_at
+    updated_at
+  }
+}
+    `;
+
+/**
+ * __useGet_TagsQuery__
+ *
+ * To run a query within a React component, call `useGet_TagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_TagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_TagsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGet_TagsQuery(baseOptions?: Apollo.QueryHookOptions<Get_TagsQuery, Get_TagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Get_TagsQuery, Get_TagsQueryVariables>(Get_TagsDocument, options);
+      }
+export function useGet_TagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Get_TagsQuery, Get_TagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Get_TagsQuery, Get_TagsQueryVariables>(Get_TagsDocument, options);
+        }
+export type Get_TagsQueryHookResult = ReturnType<typeof useGet_TagsQuery>;
+export type Get_TagsLazyQueryHookResult = ReturnType<typeof useGet_TagsLazyQuery>;
+export type Get_TagsQueryResult = Apollo.QueryResult<Get_TagsQuery, Get_TagsQueryVariables>;

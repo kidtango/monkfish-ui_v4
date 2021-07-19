@@ -8,8 +8,13 @@ import Editor from '../components/editor/Editor'
 import Tag, { Tag as TTag } from '../components/hashtag/Tag'
 import Button from 'src/components/buttons/Button'
 import MonkfishLogo from 'src/components/nav/top-nav/MonkfishLogo'
-import { useCreate_PostMutation } from 'src/generated'
-import withApollo from 'next-with-apollo'
+import {
+  Get_TagsQuery,
+  useCreate_PostMutation,
+  useGet_TagsQuery,
+} from 'src/generated'
+import withAuth from 'src/components/auth/withAuth'
+import Dropdown from 'src/components/dropdown/Dropdown'
 
 // NOTE - Mock data
 
@@ -47,6 +52,7 @@ const tagsMockData = [
 
 type Inputs = {
   title: string
+  tags: string[]
 }
 
 // interface IPost {
@@ -59,12 +65,15 @@ type Inputs = {
 
 const NewPost = () => {
   const { register, handleSubmit, watch } = useForm<Inputs>()
-
   const [content, setContent] = useState<string>('')
-
-  const [tags, setTags] = useState<TTag[]>(tagsMockData)
+  const [filteredTags, setFilteredTags] = useState<Get_TagsQuery['tags']>([])
+  const [selectedTags, setSelectedTags] = useState<Get_TagsQuery['tags']>([])
 
   const [createPost] = useCreate_PostMutation()
+  const [isOpen, setIsOpen] = useState<boolean>(true)
+  const { data, loading } = useGet_TagsQuery()
+
+  if (loading) <div>loading...</div>
 
   const onSubmit: SubmitHandler<Inputs> = args => {
     const tags = [{ tag_id: 1 }, { tag_id: 2 }]
@@ -82,10 +91,9 @@ const NewPost = () => {
 
     createPost({
       variables: {
-        author_id: '103178889326056206360',
+        author_id: '109851137750146210943',
         header_image: headerImage,
         title: args.title,
-        data: tags,
         content,
         is_published: isPublished,
       },
@@ -93,8 +101,30 @@ const NewPost = () => {
   }
 
   const handleDelete = (tagId: number) => {
-    setTags(tags.filter(tag => tag.id !== tagId))
+    setFilteredTags(filteredTags?.filter(tag => tag.id !== tagId))
   }
+
+  const handleTagAdd = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    let targetValue = ev.target.value.toLowerCase()
+    let _filteredTags = data?.tags.filter(tag => {
+      return tag.name.toLowerCase().indexOf(targetValue) !== -1
+    })
+    setFilteredTags(_filteredTags || [])
+  }
+
+  const handleAddTags = (id: number) => {
+    const selectedTag = data?.tags.find(tag => tag.id === id)
+    if (!selectedTag) return
+    // Add tag if it's not already in the list
+    if (selectedTags.indexOf(selectedTag) === -1) {
+      setSelectedTags(prevState => [...prevState, selectedTag])
+    }
+  }
+
+  console.log(
+    '🚀 ~ file: new-post.tsx ~ line 71 ~ NewPost ~ selectedTags',
+    selectedTags,
+  )
 
   return (
     <div className="flex flex-col h-screen bg-gray-200">
@@ -127,9 +157,16 @@ const NewPost = () => {
                   className="block w-full mb-2 border-0 outline-none bg-gray-50"
                   type="text"
                   placeholder="Add up to four tags..."
+                  {...register('tags', { required: false })}
+                  onChange={handleTagAdd}
+                />
+                <Dropdown
+                  isOpen={isOpen}
+                  items={filteredTags}
+                  handleClick={handleAddTags}
                 />
                 <div className="flex space-x-2">
-                  {tags.map(tag => (
+                  {filteredTags?.map(tag => (
                     <Tag tag={tag} key={tag.id} onDelete={handleDelete} />
                   ))}
                 </div>
@@ -160,4 +197,4 @@ const NewPost = () => {
   )
 }
 
-export default NewPost
+export default withAuth(NewPost)

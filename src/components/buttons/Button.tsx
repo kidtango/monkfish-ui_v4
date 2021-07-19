@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+import React, { SyntheticEvent, FC, ReactNode } from 'react'
 
 type Size = 'small' | 'medium' | 'large'
 type ButtonType = 'primary' | 'secondary' | 'plain' | 'fullWidth'
@@ -15,7 +15,7 @@ interface IButton {
   active?: Boolean
   buttonType: ButtonType
   size: Size
-  onClick?: () => void
+  onClick?: (e: SyntheticEvent) => void
   type: 'button' | 'submit' | 'reset' | undefined
 }
 
@@ -34,7 +34,7 @@ const Button: FC<IButton> = props => {
 
 export default Button
 
-const buttonStyles = (props: IButton) => {
+export const buttonStyles = (props: IButton) => {
   const base =
     'flex items-center px-2 py-2 space-x-1 text-xl transition-all outline-none bg-opacity-100 hover:bg-opacity-90 focus:outline-none flex text-gray-200'
   const size = {

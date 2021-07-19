@@ -4,8 +4,11 @@ import { FiTrash2 } from 'react-icons/fi'
 export type Tag = {
   id: number
   name: string
-  color: string
   label: string
+  color: string
+  creator: string
+  created_at?: string
+  updated_at?: string
 }
 
 interface ITag {
