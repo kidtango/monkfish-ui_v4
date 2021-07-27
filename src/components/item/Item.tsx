@@ -23,7 +23,7 @@ const Item = () => {
                 <p className="text-gray-400">Dec 26, 2021</p>
               </div>
             </div>
-            <Button buttonType={'plain'} size="small">
+            <Button buttonType={'plain'} size="small" type="button">
               <RiHeart2Line className="text-pink-500" />
               <span className="text-[.65rem] text-pink-500">2</span>
             </Button>
@@ -32,7 +32,7 @@ const Item = () => {
             Neon Green Birdnest
           </div>
           <div className="flex justify-center w-full mt-4">
-            <Button buttonType="fullWidth" size="medium">
+            <Button buttonType="fullWidth" size="medium" type="button">
               <span>Ask Seller</span>
               <AiOutlineMessage />
             </Button>

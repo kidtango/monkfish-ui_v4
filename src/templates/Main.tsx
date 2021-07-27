@@ -1,22 +1,22 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
-import Link from 'next/link';
+import Link from 'next/link'
 
-import { AppConfig } from '../utils/AppConfig';
+import { AppConfig } from '../utils/AppConf'
 
 type IMainProps = {
-  meta: ReactNode;
-  children: ReactNode;
-};
+  meta: ReactNode
+  children: ReactNode
+}
 
 const Main = (props: IMainProps) => (
-  <div className="antialiased w-full text-gray-700">
+  <div className="w-full antialiased text-gray-700">
     {props.meta}
 
     <div className="max-w-screen-md mx-auto">
       <div className="border-b border-gray-300">
         <div className="pt-16 pb-8">
-          <div className="font-bold text-3xl text-gray-900">
+          <div className="text-3xl font-bold text-gray-900">
             {AppConfig.title}
           </div>
           <div className="text-xl">{AppConfig.description}</div>
@@ -51,7 +51,7 @@ const Main = (props: IMainProps) => (
 
       <div className="py-5 text-xl content">{props.children}</div>
 
-      <div className="border-t border-gray-300 text-center py-8 text-sm">
+      <div className="py-8 text-sm text-center border-t border-gray-300">
         © Copyright {new Date().getFullYear()} {AppConfig.title}. Powered with{' '}
         <span role="img" aria-label="Love">
           ♥
@@ -66,6 +66,6 @@ const Main = (props: IMainProps) => (
       </div>
     </div>
   </div>
-);
+)
 
-export { Main };
+export { Main }

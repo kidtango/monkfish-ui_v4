@@ -10,16 +10,24 @@ interface IDropdown {
   isOpen?: boolean
   items?: Item[]
   handleClick: (id: number) => void
+  hasMenuButton?: boolean
 }
 
-const Dropdown: FC<IDropdown> = ({ isOpen, items, handleClick }) => {
+const Dropdown: FC<IDropdown> = ({
+  isOpen,
+  items,
+  handleClick,
+  hasMenuButton,
+}) => {
   return (
     <Menu>
       {() => (
         <div className="relative inline-block text-left">
-          <Menu.Button className="p-2 text-lg focus:outline-none text-deepOcean-300 hover:bg-ocean-700 hover:rounded">
-            <RiMoreFill />
-          </Menu.Button>
+          {hasMenuButton && (
+            <Menu.Button className="p-2 text-lg focus:outline-none text-deepOcean-300 hover:bg-ocean-700 hover:rounded">
+              <RiMoreFill />
+            </Menu.Button>
+          )}
 
           {/* Use the Transition + open render prop argument to add transitions. */}
           <Transition
