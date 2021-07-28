@@ -4,7 +4,7 @@ import PostsContainer from 'src/components/post/PostsContainer'
 import ItemsContainer from 'src/components/item/ItemsContainer'
 import MainLayout from 'src/layouts/MainLayout'
 import MyTags from 'src/components/hashtag/MyTags'
-import { useGetPostsQuery, useGetUserQuery } from 'src/generated'
+import { useGetPostsQuery } from 'src/generated'
 
 function Index() {
   // const { loading, data } = useGetUserQuery({
