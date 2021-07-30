@@ -16,9 +16,13 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.21",
+    "@types/multer-s3": "^2.7.10",
     "@types/ramda": "^0.27.44",
     "@types/react-copy-to-clipboard": "^5.0.1",
+    "aws-amplify": "^4.2.2",
+    "aws-sdk": "^2.957.0",
     "graphql": "^15.5.1",
+    "multer-s3": "^2.9.0",
     "next": "^11.0.1",
     "next-seo": "^4.26.0",
     "next-with-apollo": "^5.1.1",

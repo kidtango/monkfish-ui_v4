@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-monkfish-staging-14450-authRole",
+      "UnauthRoleArn": "arn:aws:iam::744773277093:role/amplify-monkfish-staging-14450-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::744773277093:role/amplify-monkfish-staging-14450-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-monkfish-staging-14450-deployment",
+      "UnauthRoleName": "amplify-monkfish-staging-14450-unauthRole",
+      "StackName": "amplify-monkfish-staging-14450",
+      "StackId": "arn:aws:cloudformation:us-east-1:744773277093:stack/amplify-monkfish-staging-14450/90aa9980-f00e-11eb-b833-0e9c2f2accbb",
+      "AmplifyAppId": "d23pmpn5iqyhx"
+    },
+    "categories": {
+      "auth": {
+        "monkfish515b56f7": {}
+      }
+    }
+  }
+}
