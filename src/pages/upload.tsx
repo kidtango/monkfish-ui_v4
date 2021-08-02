@@ -3,10 +3,6 @@ import React, { useState } from 'react'
 async function postImage({ image, description }) {
   const formData = new FormData()
   formData.append('image', image)
-
-  for (var key of formData.entries()) {
-    console.log(key[0] + ', ' + key[1])
-  }
   const result = await fetch('/api/upload', {
     method: 'POST',
     body: formData,
@@ -16,7 +12,7 @@ async function postImage({ image, description }) {
 
 const upload = () => {
   const [file, setFile] = useState()
-  console.log('🚀 ~ file: upload.tsx ~ line 18 ~ upload ~ file', file)
+  // console.log('🚀 ~ file: upload.tsx ~ line 18 ~ upload ~ file', file)
   const [description, setDescription] = useState('')
   const [images, setImages] = useState([])
 

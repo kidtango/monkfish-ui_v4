@@ -15,6 +15,12 @@ const upload = multer({
   dest: 'uploads/',
 })
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
 const handler = async (req: RequestWithFile, res: NextApiResponse) => {
   try {
     if (req.method === 'POST') {
@@ -25,7 +31,7 @@ const handler = async (req: RequestWithFile, res: NextApiResponse) => {
 
       const { fileName } = req.body
       console.log(
-        '🚀 ~ file: upload.ts ~ line 35 ~ handler ~ fileName',
+        '🚀 ~ file: upload.ts ~ line 33 ~ handler ~ fileName',
         fileName,
       )
 
