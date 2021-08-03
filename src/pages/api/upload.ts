@@ -1,18 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import multerS3 from 'multer-s3'
 import multer from 'multer'
 import runMiddleware from './utils/runMiddleware'
-import uploadS3 from './utils/uploadS3'
-import { S3 } from 'aws-sdk'
-
-const s3 = new S3({ apiVersion: '2006-03-01' })
+import { putObject } from './utils/s3'
+import { v4 as uuidv4 } from 'uuid'
 
 interface RequestWithFile extends NextApiRequest {
   file?: any
 }
 
 const upload = multer({
-  dest: 'uploads/',
+  storage: multer.memoryStorage(),
+  limits: {
+    // Max file size (1 mb)
+    fileSize: 1024 * 1024,
+  },
 })
 
 export const config = {
@@ -25,25 +26,23 @@ const handler = async (req: RequestWithFile, res: NextApiResponse) => {
   try {
     if (req.method === 'POST') {
       await runMiddleware(req, res, upload.single('image'))
-      console.log('🚀 ~ file: upload.ts ~ line 28 ~ handler ~ req', req.file)
+
+      const { folder = 'upload' } = req?.body
 
       if (!req.file) return res.status(400).json({ error: 'File empty' })
 
-      const { fileName } = req.body
-      console.log(
-        '🚀 ~ file: upload.ts ~ line 33 ~ handler ~ fileName',
-        fileName,
+      const { originalname, buffer } = req.file
+
+      if (!originalname)
+        return res.status(400).json({ error: 'FileName empty' })
+
+      const uploadResult = await putObject(
+        process.env.S3_BUCKET || '',
+        `${folder}/${originalname}-${uuidv4()}`,
+        buffer,
       )
 
-      if (!fileName) return res.status(400).json({ error: 'FileName empty' })
-
-      const uploadResult = (await uploadS3(
-        process.env.BUCKET_NAME || '',
-        fileName,
-        req.body,
-      )) as { Location: string }
-
-      return res.json({ src: uploadResult.Location, error: '' })
+      return res.json(uploadResult)
     }
 
     return res.status(404).json({ error: '404 not found' })

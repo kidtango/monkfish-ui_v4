@@ -36,10 +36,6 @@ const experiments = () => {
 
   const handleClick = async () => {
     const data = await fetch('/api/examples/helloWorld').then(res => res.json())
-    console.log(
-      '🚀 ~ file: experiments.tsx ~ line 39 ~ handleClick ~ res',
-      data,
-    )
   }
   return (
     <div className="App">

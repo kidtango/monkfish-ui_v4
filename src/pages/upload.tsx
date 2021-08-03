@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 async function postImage({ image, description }) {
   const formData = new FormData()
   formData.append('image', image)
+  formData.append('folder', 'posts')
   const result = await fetch('/api/upload', {
     method: 'POST',
     body: formData,
   }).then(response => response.json())
-  return result.data
+  return result
 }
 
 const upload = () => {
@@ -19,11 +20,13 @@ const upload = () => {
   const submit = async event => {
     event.preventDefault()
     const result = await postImage({ image: file, description })
+    console.log('🚀 ~ file: upload.tsx ~ line 22 ~ upload ~ result', result)
     // setImages([result.image, ...images])
   }
 
   const fileSelected = event => {
     const file = event.target.files[0]
+    console.log(file)
     setFile(file)
   }
 
@@ -44,8 +47,6 @@ const upload = () => {
           <img src={image}></img>
         </div>
       ))}
-
-      {/* <img src="/images/9fa06d3c5da7aec7f932beb5b3e60f1d"></img> */}
     </div>
   )
 }
