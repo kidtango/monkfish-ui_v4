@@ -1,25 +1,24 @@
 import React, { useState } from 'react'
-
-async function postImage({ image, description }) {
-  const formData = new FormData()
-  formData.append('image', image)
-  formData.append('folder', 'posts')
-  const result = await fetch('/api/upload', {
-    method: 'POST',
-    body: formData,
-  }).then(response => response.json())
-  return result
-}
+import useImageKitUrl from 'src/hooks/useImageKitUrl'
+import useUploadImage from 'src/hooks/useUploadImage'
 
 const upload = () => {
   const [file, setFile] = useState()
   // console.log('🚀 ~ file: upload.tsx ~ line 18 ~ upload ~ file', file)
   const [description, setDescription] = useState('')
   const [images, setImages] = useState([])
+  const imagekitUrl = useImageKitUrl()
+
+  const testImage =
+    imagekitUrl +
+    'posts/wallpaperflare.com_wallpaper (2).jpg-cc0a17bd-e16f-4d31-85de-aaa93190f087'
 
   const submit = async event => {
     event.preventDefault()
-    const result = await postImage({ image: file, description })
+
+    if (!file) return
+
+    const result = await useUploadImage(file!, 'posts')
     console.log('🚀 ~ file: upload.tsx ~ line 22 ~ upload ~ result', result)
     // setImages([result.image, ...images])
   }
@@ -47,6 +46,7 @@ const upload = () => {
           <img src={image}></img>
         </div>
       ))}
+      <img src={testImage}></img>
     </div>
   )
 }
