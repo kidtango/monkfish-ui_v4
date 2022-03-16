@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "monkfish515b56f7": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "monkfishS3Images": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-monkfish-staging-14450-authRole",
+      "UnauthRoleArn": "arn:aws:iam::744773277093:role/amplify-monkfish-staging-14450-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::744773277093:role/amplify-monkfish-staging-14450-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-monkfish-staging-14450-deployment",
+      "UnauthRoleName": "amplify-monkfish-staging-14450-unauthRole",
+      "StackName": "amplify-monkfish-staging-14450",
+      "StackId": "arn:aws:cloudformation:us-east-1:744773277093:stack/amplify-monkfish-staging-14450/90aa9980-f00e-11eb-b833-0e9c2f2accbb",
+      "AmplifyAppId": "d23pmpn5iqyhx"
+    }
+  },
+  "auth": {
+    "monkfish515b56f7": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-monkfish-staging-14450-deployment/amplify-cfn-templates/auth/monkfish515b56f7-cloudformation-template.yml",
+        "logicalId": "authmonkfish515b56f7"
+      },
+      "lastPushTimeStamp": "2021-07-29T02:45:03.693Z",
+      "output": {
+        "UserPoolId": "us-east-1_MYlXAHyzZ",
+        "AppClientIDWeb": "2maolvjtnsntk8srlv7fb6p65d",
+        "AppClientID": "1p7j4u7pcd3qo6uajc00s3p2i3",
+        "IdentityPoolId": "us-east-1:c69ba44d-01cf-4c2a-b8b0-4d3139565096",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:744773277093:userpool/us-east-1_MYlXAHyzZ",
+        "IdentityPoolName": "monkfish515b56f7_identitypool_515b56f7__staging",
+        "UserPoolName": "monkfish515b56f7_userpool_515b56f7"
+      },
+      "lastPushDirHash": "pZV40rOy2R22iYpbC/5fZEkgk34="
+    }
+  },
+  "storage": {
+    "monkfishS3Images": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-monkfish-staging-14450-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+        "logicalId": "storagemonkfishS3Images"
+      },
+      "lastPushTimeStamp": "2021-07-29T02:45:03.694Z",
+      "output": {
+        "BucketName": "monkfish68c6aa149d6643fa8ec875b634129e3914450-staging",
+        "Region": "us-east-1"
+      },
+      "lastPushDirHash": "tPU93sWoi5AEQL50kJLxcbYZ6/I="
+    }
+  }
+}
