@@ -6,23 +6,17 @@ export interface IButtonIcon {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const IconButton: React.FC<IButtonIcon> = ({ Icon, srMessage, onClick }) => {
-  return (
-    <button className={IconButtonStyles()} onClick={onClick}>
-      <span className="sr-only">{srMessage}</span>
-      <span>{Icon}</span>
-    </button>
-  )
-}
+const IconButton: React.FC<IButtonIcon> = ({ Icon, srMessage, onClick }) => (
+  <button className={IconButtonStyles()} onClick={onClick}>
+    <span className="sr-only">{srMessage}</span>
+    <span>{Icon}</span>
+  </button>)
+
 
 export default IconButton
 
 const IconButtonStyles = () => {
-  const main =
-    'p-2.5 transition-colors duration-200 bg-ocean-700 rounded-full bg-opacity-40 text-primary-400 backdrop-filter'
-  const hover =
-    'hover:text-primary-100 hover:rounded-xl hover:bg-opacity-100 hover:ring-2 hover:ring-primary-40'
-  const focus =
-    'focus:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400'
-  return main + hover + focus
+  const main = 'p-2.5 transition-colors duration-200 rounded-full bg-opacity-40 text-wedgewood-400 backdrop-filter hover:bg-wedgewood-50 focus:bg-catskill-white-600 focus:outline-none focus:ring-2 focus:ring-wedgewood-400'
+
+  return main
 }

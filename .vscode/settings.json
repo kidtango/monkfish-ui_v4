@@ -3,6 +3,10 @@
     "titleBar.activeForeground": "#000",
     "titleBar.inactiveForeground": "#000000CC",
     "titleBar.activeBackground": "#10e6db",
-    "titleBar.inactiveBackground": "#1ae7bbcc"
+    "titleBar.inactiveBackground": "#1ae7bbcc",
+    "eslint.format.enable": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
   }
 }

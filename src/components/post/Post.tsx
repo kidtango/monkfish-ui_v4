@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { RiHeart2Line } from 'react-icons/ri'
 import { AiOutlineComment } from 'react-icons/ai'
 import { BsBookmarkDash } from 'react-icons/bs'
@@ -14,9 +15,11 @@ const Post = () => {
   return (
     <div className="overflow-hidden text-gray-200 transition-all bg-opacity-50 rounded bg-ebonyClay-600 hover:shadow-lg hover:cursor-pointer hover:bg-opacity-90 backdrop-filter ring-2 ring-ebonyClay-600">
       <div className="aspect-h-2 aspect-w-6">
-        <img
+        <Image
           className="object-cover"
           src="https://www.hakaimagazine.com/wp-content/uploads/header-vr-coral-beauty.jpg"
+          alt="cover image"
+          layout="fill"
         />
       </div>
       <div className="p-2">
