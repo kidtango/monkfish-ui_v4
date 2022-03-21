@@ -13,8 +13,9 @@ import Button from 'src/components/buttons/Button'
 
 // import UserMenu from '../user-menu/UserMenu'
 import IconButton from '../../buttons/IconButton'
-import MonkfishLogo from './MonkfishLogo'
+import ShareFragLogo from './ShareFragLogo'
 import ToggleMenuButton from './ToggleMenuButton'
+import SearchBar from '../search-bar/SearchBar'
 
 interface INavbar {
   isSidebarOpen: boolean
@@ -43,20 +44,17 @@ const Navbar: React.FC<INavbar> = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   return (
     <header className="bg-catskill-white-50 bg-opacity-50 backdrop-filter backdrop-blur sticky top-0 z-30 h-[72px] w-full border-b border-catskill-white-500 shadow items-center flex">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between ">
+      <div className="container flex-wrap mx-auto">
+        <div className="flex items-center space-x-1">
           {/* mobile navbar */}
 
           {/* Navbar left */}
-          <div className="flex items-center">
-            {/* Toggle Sidebar Button */}
-            {/* <ToggleMenuButton
-              onClick={setIsSidebarOpen}
-              isSidebarOpen={isSidebarOpen}
-            /> */}
-            <MonkfishLogo />
-          </div>
 
+          {/* Toggle Sidebar Button */}
+          <div className='mr-2'>
+            <ShareFragLogo />
+          </div>
+          <SearchBar />
           {/* Navbar Right */}
           {session ? (
             <div className="flex items-center space-x-2">
